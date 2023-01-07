@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LibeRate.Views.RegisterPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled">
+    <ContentPage.Content>
+        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Entry Text="{Binding Username}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"
+                   Placeholder="Username" />
+            <Entry Text="{Binding Password}"
+                   Placeholder="Password"
+                   IsPassword="True" 
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"/>
+            <Button VerticalOptions="Center" Text="Register" Command="{Binding RegisterCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
