@@ -1,4 +1,5 @@
-﻿using LibeRate.Services;
+﻿using LibeRate.Models;
+using LibeRate.Services;
 using LibeRate.Views;
 using System;
 using Xamarin.Forms;
@@ -8,12 +9,11 @@ namespace LibeRate
 {
     public partial class App : Application
     {
-
+        public static User CurrentUser { get; set; }
         public App()
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

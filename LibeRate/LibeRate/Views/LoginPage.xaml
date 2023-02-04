@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:LibeRate.Resx"
              mc:Ignorable="d"
              x:Class="LibeRate.Views.LoginPage"
              Shell.NavBarIsVisible="False"
@@ -12,14 +13,17 @@
             <Entry Text="{Binding Username}"
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Center"
-                   Placeholder="Username" />
+                   Placeholder="{x:Static resources:AppResources.EmailEntryPlaceholder}" />
+            
             <Entry Text="{Binding Password}"
-                   Placeholder="Password"
+                   Placeholder="{x:Static resources:AppResources.PasswordEntryPlaceholder}"
                    IsPassword="True" 
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Center"/>
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-            <Label Text="Register" HorizontalOptions="Center">
+
+            <Button VerticalOptions="Center" Text="{x:Static resources:AppResources.LoginButton}" Command="{Binding LoginCommand}"/>
+
+            <Label Text="{x:Static resources:AppResources.RegisterLabel}" HorizontalOptions="Center">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RegisterCommand}"/>
                 </Label.GestureRecognizers>

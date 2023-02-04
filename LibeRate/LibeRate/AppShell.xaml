@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:LibeRate.Views"
+       xmlns:resources="clr-namespace:LibeRate.Resx"
        Title="LibeRate"
        x:Class="LibeRate.AppShell">
 
@@ -17,11 +18,12 @@
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
                 <Setter Property="Shell.TitleColor" Value="White" />
-                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.DisabledColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.UnselectedColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarDisabledColor" Value="{StaticResource Primary}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Primary}"/>
                 <Setter Property="Shell.TabBarTitleColor" Value="White"/>
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
@@ -82,11 +84,24 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
 
-    <FlyoutItem Title="About" Icon="icon_about.png">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+    <ShellItem Route="SelectTargetLanguagePage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:SelectTargetLanguagePage}" />
+    </ShellItem>
+    
+    <FlyoutItem Title="{x:Static resources:AppResources.SearchTitle}" Icon="icon_about.png">
+        <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Browse" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+
+    <FlyoutItem Title="Browse">
+        <ShellContent Route="BooksPage" ContentTemplate="{DataTemplate local:BooksPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Profile">
+        <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings">
+        <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate local:SettingsPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

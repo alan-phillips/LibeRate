@@ -19,7 +19,7 @@ namespace LibeRate.Droid.Services
     {
         public bool IsSignedIn()
         {
-            var user = Firebase.Auth.FirebaseAuth.Instance.CurrentUser;
+            var user = FirebaseAuth.Instance.CurrentUser;
             return user != null;
         }
 
@@ -27,8 +27,8 @@ namespace LibeRate.Droid.Services
         {
             try
             {
-                var user = await Firebase.Auth.FirebaseAuth.Instance.CreateUserWithEmailAndPassword(email, password);
-                var token = await (Firebase.Auth.FirebaseAuth.Instance.CurrentUser.GetIdToken(true).AsAsync<GetTokenResult>());
+                var user = await FirebaseAuth.Instance.CreateUserWithEmailAndPassword(email, password);
+                var token = await FirebaseAuth.Instance.CurrentUser.GetIdToken(true).AsAsync<GetTokenResult>();
 
                 return token.Token;
             } 
@@ -48,8 +48,8 @@ namespace LibeRate.Droid.Services
         {
             try
             {
-                var user = await Firebase.Auth.FirebaseAuth.Instance.SignInWithEmailAndPasswordAsync(email, password);
-                var token = await (Firebase.Auth.FirebaseAuth.Instance.CurrentUser.GetIdToken(true).AsAsync<GetTokenResult>());
+                var user = await FirebaseAuth.Instance.SignInWithEmailAndPasswordAsync(email, password);
+                var token = await FirebaseAuth.Instance.CurrentUser.GetIdToken(true).AsAsync<GetTokenResult>()  ;
 
                 return token.Token;
             }
@@ -69,13 +69,18 @@ namespace LibeRate.Droid.Services
         {
             try
             {
-                Firebase.Auth.FirebaseAuth.Instance.SignOut();
+                FirebaseAuth.Instance.SignOut();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        public string GetUserID()
+        {
+            return FirebaseAuth.Instance.CurrentUser.Uid;
         }
     }
 }

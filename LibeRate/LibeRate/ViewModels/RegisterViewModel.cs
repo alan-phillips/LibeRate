@@ -9,6 +9,7 @@ namespace LibeRate.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
+        private string _email;
         private string _username;
         private string _password;
         public Command RegisterCommand { get; }
@@ -16,6 +17,25 @@ namespace LibeRate.ViewModels
         public RegisterViewModel()
         {
             RegisterCommand = new Command(OnRegisterClicked);
+        }
+
+        private bool ValidateForm(object arg)
+        {
+            return  !String.IsNullOrWhiteSpace(_username)
+                && !String.IsNullOrWhiteSpace(_password);
+        }
+
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged(nameof(Email));
+                }
+            }
         }
 
         public string Username
@@ -48,10 +68,17 @@ namespace LibeRate.ViewModels
         private async void OnRegisterClicked(object obj)
         {
             IFirebaseAuthentication auth = DependencyService.Get<IFirebaseAuthentication>();
-            await auth.RegisterWithEmailAndPassword(Username, Password);
-            if (auth.IsSignedIn())
+            string result = await auth.RegisterWithEmailAndPassword(Email, Password);
+            if (result != string.Empty)
             {
-                await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                await auth.LoginWithEmailAndPassword(Email, Password);
+                if (auth.IsSignedIn())
+                {
+                    IUserService userService = DependencyService.Get<IUserService>();
+                    App.CurrentUser.Id = auth.GetUserID();
+                    await userService.CreateUserProfile(Username);
+                    await Shell.Current.GoToAsync($"//{nameof(SelectTargetLanguagePage)}");
+                }
             }
         }
     }

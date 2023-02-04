@@ -20,6 +20,8 @@ namespace LibeRate.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FirebaseApp.InitializeApp(Application.Context);
             Xamarin.Forms.DependencyService.Register<FirebaseAuthentication>();
+            Xamarin.Forms.DependencyService.Register<UserService>();
+            Xamarin.Forms.DependencyService.Register<BookService>();
 
             LoadApplication(new App());
         }
