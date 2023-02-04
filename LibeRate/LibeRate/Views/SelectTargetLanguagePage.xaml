@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:LibeRate.Models"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="LibeRate.Views.SelectTargetLanguagePage"
+             x:DataType="viewmodels:SelectTargetLanguageViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <viewmodels:SelectTargetLanguageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+
+            <ListView
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                ItemsSource="{Binding Languages}"
+                Style="{StaticResource BookListView}"
+                SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:LanguageMenuItem">
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Confirm"
+                                          Command="{Binding 
+                                    Source={RelativeSource AncestorType={x:Type viewmodels:SelectTargetLanguageViewModel}},
+                                    Path=ConfirmSelectionCommand}"
+                                          CommandParameter="{Binding .}"
+                                          />
+                            </ViewCell.ContextActions>
+                            <Grid Padding="10">
+                                <Frame CornerRadius="20" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding ImageURL}" WidthRequest="66" />
+                                        <StackLayout VerticalOptions="Center">
+                                            <Label
+                                                FontSize="Large"
+                                                Text="{Binding LanguageName}"
+                                                VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button VerticalOptions="Center" Text="Confirm" Command="{Binding ConfirmSelectionCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
+

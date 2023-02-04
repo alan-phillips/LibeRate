@@ -6,6 +6,10 @@
              Shell.FlyoutBehavior="Disabled">
     <ContentPage.Content>
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Entry Text="{Binding Email}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"
+                   Placeholder="Email" />
             <Entry Text="{Binding Username}"
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Center"

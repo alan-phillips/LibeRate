@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#873e23</Color>
+            
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -26,6 +27,15 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+            
+            <Style x:Key="BookListView" TargetType="ListView">
+                <Setter Property="HasUnevenRows" Value="True"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="SeparatorVisibility"
+                        Value="None"/>
+                <Setter Property="IsPullToRefreshEnabled"
+                        Value="True"/>
             </Style>
         </ResourceDictionary>        
     </Application.Resources>

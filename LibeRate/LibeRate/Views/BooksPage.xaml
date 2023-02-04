@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:LibeRate.Models"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             x:Class="LibeRate.Views.BooksPage"
+             x:DataType="viewmodels:BooksViewModel"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <viewmodels:BooksViewModel />
+    </ContentPage.BindingContext>
+
+    <ListView
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        ItemsSource="{Binding Books}"
+        RefreshCommand="{Binding RefreshCommand}"
+        Style="{StaticResource BookListView}">
+        <ListView.ItemTemplate>
+        <DataTemplate x:DataType="model:Book">
+            <ViewCell>
+                    <ViewCell.ContextActions>
+                    </ViewCell.ContextActions>
+                <Grid Padding="10">
+                    <Frame CornerRadius="20" HasShadow="True">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding ImageURL}" WidthRequest="66" />
+                            <StackLayout VerticalOptions="Center">
+                                <Label
+                                        FontSize="Large"
+                                        Text="{Binding Title}"
+                                        VerticalOptions="Center" />
+                                <Label
+                                        FontSize="Large"
+                                        Text="{Binding Author}"
+                                        VerticalOptions="Center" />
+                            </StackLayout>
+                                <Label
+                                FontSize="Large"
+                                Text="{Binding DifficultyRating}"
+                                VerticalOptions="Start" />
+                            </StackLayout>
+                    </Frame>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+    
+</ContentPage>

@@ -28,7 +28,7 @@ namespace LibeRate.Views
             {
                 if(auth.IsSignedIn())
                 {
-                    await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                    await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
                 }
 
             }

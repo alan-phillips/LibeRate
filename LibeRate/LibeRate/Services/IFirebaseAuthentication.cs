@@ -11,5 +11,6 @@ namespace LibeRate.Services
         Task<string> LoginWithEmailAndPassword(string email, string password);
         bool SignOut();
         bool IsSignedIn();
+        string GetUserID();
     }
 }
