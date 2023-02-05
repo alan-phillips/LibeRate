@@ -23,15 +23,32 @@ namespace LibeRate.Droid.Services
     public class BookService : Java.Lang.Object, IBookService, IOnCompleteListener
     {
         List<Book> books = new List<Book>();
+        List<DocumentSnapshot> pageBottoms = new List<DocumentSnapshot>();
         bool hasReadBooks = false;
-        public async Task<List<Book>> GetBooks(string languageID)
+
+        public async Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage)
         {
+            books.Clear();
             hasReadBooks = false;
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            Query query = db.Collection(languageID + "-books").OrderBy("difficulty_rating");
+
+            Query query;
+            if (pageNumber== 1)
+            {
+                query = db.Collection(languageID + "-books")
+                    .OrderBy("difficulty_rating")
+                    .Limit(itemsPerPage);
+            } else
+            {
+                query = db.Collection(languageID + "-books")
+                    .OrderBy("difficulty_rating")
+                    .StartAfter(pageBottoms.ElementAt(pageNumber-2))
+                    .Limit(itemsPerPage);
+            }
+            
             query.Get().AddOnCompleteListener(this);
             
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 50; i++)
             {
                 await System.Threading.Tasks.Task.Delay(100);
                 if (hasReadBooks) break;
@@ -46,18 +63,21 @@ namespace LibeRate.Droid.Services
             if(!snapshot.IsEmpty)
             {
                 var documents = snapshot.Documents;
-                books.Clear();
                 foreach(DocumentSnapshot doc in documents)
                 {
-                    Book b = new Book(doc.Get("title").ToString(), 
+                    Book b = new Book(doc.Id,
+                        doc.Get("title").ToString(), 
                         doc.Get("author").ToString(), 
                         doc.Get("cover_image").ToString(), 
                         ((int)doc.Get("difficulty_rating")));
                     books.Add(b);
                 }
-                
+                if(!pageBottoms.Contains(documents.Last())) 
+                {
+                    pageBottoms.Add(documents.Last());  
+                }
+                hasReadBooks= true;
             }
-            hasReadBooks = true;
         }
     }
 }

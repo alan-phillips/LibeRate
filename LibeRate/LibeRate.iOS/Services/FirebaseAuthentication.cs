@@ -44,5 +44,10 @@ namespace LibeRate.iOS.Services
                 return false;
             }
         }
+
+        public string GetUserID()
+        {
+            return Auth.DefaultInstance.CurrentUser.Uid;
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace LibeRate.Services
 {
     public interface IBookService
     {
-        Task<List<Book>> GetBooks(string languageID);
+        Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage);
     }
 }
