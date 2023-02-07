@@ -26,6 +26,24 @@ namespace LibeRate.Droid.Services
         List<DocumentSnapshot> pageBottoms = new List<DocumentSnapshot>();
         bool hasReadBooks = false;
 
+        public async Task<Book> GetBook(string languageID, string ID)
+        {
+            books.Clear();
+            hasReadBooks = false;
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+
+            DocumentReference query = db.Collection(languageID + "-books")
+                .Document(ID);
+
+            query.Get(Source.Cache).AddOnCompleteListener(this);
+
+            for (int i = 0; i < 50; i++)
+            {
+                await System.Threading.Tasks.Task.Delay(100);
+                if (hasReadBooks) break;
+            }
+            return books.ElementAt(0);
+        }
         public async Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage)
         {
             books.Clear();

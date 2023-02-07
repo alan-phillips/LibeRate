@@ -12,6 +12,7 @@ namespace LibeRate.Models
         public string ImageURL { get; set; }
         public int DifficultyRating { get; set; }
 
+        public Book() { }
         public Book(string id, string title, string author, string imageURL, int difficultyRating)
         {
             Id = id;

@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.OS;
 using Firebase;
 using LibeRate.Droid.Services;
+using Acr.UserDialogs;
 
 namespace LibeRate.Droid
 {
@@ -19,9 +20,12 @@ namespace LibeRate.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FirebaseApp.InitializeApp(Application.Context);
+
             Xamarin.Forms.DependencyService.Register<FirebaseAuthentication>();
             Xamarin.Forms.DependencyService.Register<UserService>();
             Xamarin.Forms.DependencyService.Register<BookService>();
+            Xamarin.Forms.DependencyService.Register<LibraryService>();
+            UserDialogs.Init(this);
 
             LoadApplication(new App());
         }

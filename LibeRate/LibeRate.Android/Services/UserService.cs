@@ -31,12 +31,12 @@ namespace LibeRate.Droid.Services
             user.Id= userId;
             FirebaseFirestore db = FirebaseFirestore.Instance;
             db.Collection("users").Document(userId).Get().AddOnCompleteListener(this);
-            for (var i = 0; i < 25; i++)
+            for (var i = 0; i < 50; i++)
             {
                 if (hasReadUser == true) break;
                 await System.Threading.Tasks.Task.Delay(100);
             }
-            return null;
+            return user;
         }
         public async Task CreateUserProfile(string username)
         {
