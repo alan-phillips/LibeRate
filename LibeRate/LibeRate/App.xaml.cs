@@ -1,4 +1,5 @@
-﻿using LibeRate.Models;
+﻿using Autofac;
+using LibeRate.Models;
 using LibeRate.Services;
 using LibeRate.Views;
 using System;
@@ -12,6 +13,7 @@ namespace LibeRate
         public static User CurrentUser { get; set; }
         public App()
         {
+            CurrentUser= new User();
             InitializeComponent();
 
             MainPage = new AppShell();
@@ -19,6 +21,7 @@ namespace LibeRate
 
         protected override void OnStart()
         {
+            
         }
 
         protected override void OnSleep()

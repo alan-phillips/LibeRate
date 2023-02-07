@@ -1,5 +1,6 @@
 ﻿using LibeRate.Models;
 using LibeRate.Services;
+using LibeRate.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace LibeRate.ViewModels
         private bool _previousButtonVisible;
         public int ItemsPerPage { get; set; }
         public Command RefreshCommand { get; }
-        public Command ViewDetailCommand { get; }
+        public Command<Book> ViewDetailCommand { get; }
         public Command NextPageCommand { get; }
         public Command PreviousPageCommand { get; }
 
@@ -30,7 +31,7 @@ namespace LibeRate.ViewModels
             PreviousButtonVisible = false;
 
             RefreshCommand = new Command(Refresh);
-            ViewDetailCommand = new Command(ViewDetail);
+            ViewDetailCommand = new Command<Book>(ViewDetail);
             NextPageCommand = new Command(NextPage);
             PreviousPageCommand = new Command(PreviousPage);
 
@@ -73,9 +74,10 @@ namespace LibeRate.ViewModels
         {
         }
 
-        private async void ViewDetail()
+        private async void ViewDetail(Book book)
         {
-
+            var route = $"{nameof(BookPage)}?BookId={book.Id}&Title={book.Title}&Author={book.Author}&Img={book.ImageURL}&Diff={book.DifficultyRating}";
+            await Shell.Current.GoToAsync(route);
         }
 
         private void NextPage()
