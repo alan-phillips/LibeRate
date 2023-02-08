@@ -6,9 +6,10 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.SelectTargetLanguagePage"
              x:DataType="viewmodels:SelectTargetLanguageViewModel"
+             xmlns:resources="clr-namespace:LibeRate.Resx"
              Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled"
-             Title="{Binding Title}">
+             Title="{x:Static resources:AppResources.SelectTargetLanguageTitle}">
     <ContentPage.BindingContext>
         <viewmodels:SelectTargetLanguageViewModel />
     </ContentPage.BindingContext>
@@ -51,7 +52,8 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button VerticalOptions="Center" Text="Confirm" Command="{Binding ConfirmSelectionCommand}"/>
+            <Button VerticalOptions="Center" Text="{x:Static resources:AppResources.ConfirmButton}" 
+                    Command="{Binding ConfirmSelectionCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 

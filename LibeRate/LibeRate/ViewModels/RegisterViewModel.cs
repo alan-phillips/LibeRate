@@ -3,6 +3,7 @@ using LibeRate.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace LibeRate.ViewModels
@@ -16,7 +17,7 @@ namespace LibeRate.ViewModels
 
         public RegisterViewModel()
         {
-            RegisterCommand = new Command(OnRegisterClicked);
+            RegisterCommand = new Command(async () => await OnRegisterClicked());
         }
 
         private bool ValidateForm(object arg)
@@ -65,7 +66,7 @@ namespace LibeRate.ViewModels
         }
 
 
-        private async void OnRegisterClicked(object obj)
+        private async Task OnRegisterClicked()
         {
             IFirebaseAuthentication auth = DependencyService.Get<IFirebaseAuthentication>();
             string result = await auth.RegisterWithEmailAndPassword(Email, Password);

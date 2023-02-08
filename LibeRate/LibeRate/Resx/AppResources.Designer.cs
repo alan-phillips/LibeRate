@@ -61,6 +61,42 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to library.
+        /// </summary>
+        public static string AddToLibraryButton {
+            get {
+                return ResourceManager.GetString("AddToLibraryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string BrowseTitle {
+            get {
+                return ResourceManager.GetString("BrowseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change target language.
+        /// </summary>
+        public static string ChangeTargetLanguageSetting {
+            get {
+                return ResourceManager.GetString("ChangeTargetLanguageSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string ConfirmButton {
+            get {
+                return ResourceManager.GetString("ConfirmButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string EmailEntryPlaceholder {
@@ -79,11 +115,47 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string LogoutTitle {
+            get {
+                return ResourceManager.GetString("LogoutTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string NextButton {
+            get {
+                return ResourceManager.GetString("NextButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string PasswordEntryPlaceholder {
             get {
                 return ResourceManager.GetString("PasswordEntryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prev.
+        /// </summary>
+        public static string PreviousButton {
+            get {
+                return ResourceManager.GetString("PreviousButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string ProfileTitle {
+            get {
+                return ResourceManager.GetString("ProfileTitle", resourceCulture);
             }
         }
         
@@ -106,11 +178,38 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search books....
+        /// </summary>
+        public static string SearchBarPlaceholder {
+            get {
+                return ResourceManager.GetString("SearchBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SearchTitle {
             get {
                 return ResourceManager.GetString("SearchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Target Language.
+        /// </summary>
+        public static string SelectTargetLanguageTitle {
+            get {
+                return ResourceManager.GetString("SelectTargetLanguageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
             }
         }
         

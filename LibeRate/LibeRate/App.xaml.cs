@@ -11,6 +11,7 @@ namespace LibeRate
     public partial class App : Application
     {
         public static User CurrentUser { get; set; }
+        public static bool LanguageChanged { get; set; }
         public App()
         {
             CurrentUser= new User();

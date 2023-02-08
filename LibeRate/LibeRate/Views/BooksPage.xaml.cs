@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibeRate.Services;
+using LibeRate.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -16,8 +18,15 @@ namespace LibeRate.Views
         public BooksPage()
         {
             InitializeComponent();
-            
+
         }
 
+        protected override void OnAppearing()
+        {
+            if(BindingContext is BooksViewModel viewModel && App.LanguageChanged==true)
+            {
+                viewModel.Refresh();
+            }
+        }
     }
 }

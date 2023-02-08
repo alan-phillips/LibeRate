@@ -97,5 +97,11 @@ namespace LibeRate.Droid.Services
                 hasReadBooks= true;
             }
         }
+
+        public void ResetService()
+        {
+            books.Clear();
+            pageBottoms.Clear();
+        }
     }
 }

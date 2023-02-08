@@ -11,5 +11,7 @@ namespace LibeRate.Services
     {
         Task<Book> GetBook(string languageID, string ID);
         Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage);
+
+        void ResetService();
     }
 }

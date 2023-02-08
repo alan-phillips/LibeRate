@@ -18,10 +18,13 @@ namespace LibeRate.ViewModels
 
         public SelectTargetLanguageViewModel()
         {
-            Title = "Select Target Language";
-            Languages = new ObservableCollection<LanguageMenuItem>();
-            Languages.Add(new LanguageMenuItem("english", "English", ""));
-            ConfirmSelectionCommand= new Command(ConfirmSelection);
+            Languages = new ObservableCollection<LanguageMenuItem>
+            {
+                new LanguageMenuItem("english", "English", ""),
+                new LanguageMenuItem("japanese", "Japanese", "")
+            };
+
+            ConfirmSelectionCommand = new Command(ConfirmSelection);
         }
 
         public LanguageMenuItem SelectedLanguage 
@@ -41,6 +44,7 @@ namespace LibeRate.ViewModels
             await userService.SetTargetLanguage(SelectedLanguage.LanguageID);
 
             App.CurrentUser = await userService.GetUser(App.CurrentUser.Id);
+            App.LanguageChanged = true;
             await Shell.Current.Navigation.PopToRootAsync();
             await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
         }
