@@ -4,7 +4,8 @@
              xmlns:model="clr-namespace:LibeRate.Models"
              xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              x:Class="LibeRate.Views.BookPage"
-             x:DataType="viewmodels:BookViewModel">
+             x:DataType="viewmodels:BookViewModel"
+             xmlns:resources="clr-namespace:LibeRate.Resx">
 
     <ContentPage.BindingContext>
         <viewmodels:BookViewModel/>
@@ -13,7 +14,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Image Source="{Binding DisplayBook.ImageURL}" />
-            <Button Text="Add to Library" Command="{Binding AddToLibraryCommand}"/>
+            <Button Text="{x:Static resources:AppResources.AddToLibraryButton}" 
+                    Command="{Binding AddToLibraryCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -44,8 +44,11 @@ namespace LibeRate.ViewModels
         {
             string[] strings = { "Wishlist", "Owned", "Read" };
             string selection = await _dialogService.ShowActionSheetAsync(null, "Cancel", null, strings);
-            ILibraryService libraryService = DependencyService.Get<ILibraryService>();
-            await libraryService.AddBookToLibrary(displayBook.Id, "english", selection);
+            if (selection != "Cancel")
+            {
+                ILibraryService libraryService = DependencyService.Get<ILibraryService>();
+                await libraryService.AddBookToLibrary(displayBook.Id, App.CurrentUser.TargetLanguage, selection);
+            }
         }
     }
 }

@@ -6,7 +6,9 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.BooksPage"
              x:DataType="viewmodels:BooksViewModel"
-             Title="{Binding Title}">
+             xmlns:resources="clr-namespace:LibeRate.Resx"
+             Title="{x:Static resources:AppResources.BrowseTitle}">
+    
     <ContentPage.BindingContext>
         <viewmodels:BooksViewModel />
     </ContentPage.BindingContext>
@@ -18,7 +20,7 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout Padding="5,0,5,0" VerticalOptions="Center">
+        <StackLayout VerticalOptions="Center">
             <ListView
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 ItemsSource="{Binding Books}"
@@ -37,38 +39,42 @@
                     <ViewCell>
                             <ViewCell.ContextActions>
                             </ViewCell.ContextActions>
-                        <Grid Padding="10">
-                            <Frame CornerRadius="20" HasShadow="True">
-                                <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding ImageURL}" WidthRequest="66" />
-                                    <StackLayout VerticalOptions="Center">
-                                        <Label
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Image Source="{Binding ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Start"/>
+                                        <StackLayout HorizontalOptions="Start">
+                                            <Label  
                                                 FontSize="Large"
                                                 Text="{Binding Title}"
                                                 VerticalOptions="Center" />
-                                        <Label
-                                                FontSize="Large"
+                                            <Label
+                                                FontSize="Medium"
                                                 Text="{Binding Author}"
                                                 VerticalOptions="Center" />
+                                        </StackLayout>
+
+                                        <Frame MinimumWidthRequest="30" WidthRequest="30" HeightRequest="30" CornerRadius="15" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Maroon">
+                                            <Label Text="{Binding DifficultyRating}" 
+                                                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Frame>
+
                                     </StackLayout>
-                                        <Label
-                                        FontSize="Large"
-                                        Text="{Binding DifficultyRating}"
-                                        VerticalOptions="Start" />
-                                    </StackLayout>
-                            </Frame>
-                        </Grid>
-                    </ViewCell>
+                                </Frame>
+                            </Grid>
+                        </ViewCell>
                 </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Button VerticalOptions="Start" Text="Prev" 
+            <StackLayout Orientation="Horizontal" Spacing="60"  HorizontalOptions="CenterAndExpand">
+                <Button VerticalOptions="Start" Text="{x:Static resources:AppResources.PreviousButton}" 
                         Command="{Binding PreviousPageCommand}"
                         IsEnabled="{Binding PreviousButtonVisible}" />
-                <Label Padding="60,0" VerticalOptions="CenterAndExpand" Text="{Binding PageNumber}"/>
-                <Button VerticalOptions="End" Text="Next" Command="{Binding NextPageCommand}"/>
+                <Label VerticalOptions="CenterAndExpand" Text="{Binding PageNumber}"/>
+                <Button VerticalOptions="End" Text="{x:Static resources:AppResources.NextButton}" 
+                        Command="{Binding NextPageCommand}"
+                        IsEnabled="{Binding NextButtonVisible}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

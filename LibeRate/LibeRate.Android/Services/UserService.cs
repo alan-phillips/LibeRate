@@ -65,9 +65,9 @@ namespace LibeRate.Droid.Services
             var snapshot = (DocumentSnapshot)task.Result;
             if (snapshot.Exists())
             {
+                user.Id = snapshot.Id;
                 user.Username = snapshot.Get("username").ToString();
                 user.TargetLanguage = snapshot.Get("target_language").ToString();
-                user.AccountCreated = DateTime.Parse(snapshot.Get("date_created").ToString());
 
                 hasReadUser = true;
             }

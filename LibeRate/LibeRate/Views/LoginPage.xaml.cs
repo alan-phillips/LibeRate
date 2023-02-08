@@ -28,7 +28,8 @@ namespace LibeRate.Views
             {
                 if(auth.IsSignedIn())
                 {
-                    App.CurrentUser.Id = auth.GetUserID();
+                    IUserService userService = DependencyService.Get<IUserService>();
+                    App.CurrentUser = await userService.GetUser(auth.GetUserID());
                     await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
                 }
 

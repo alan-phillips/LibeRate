@@ -117,14 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddToLibraryButton" xml:space="preserve">
+    <value>ライブラリに追加</value>
+  </data>
+  <data name="BrowseTitle" xml:space="preserve">
+    <value>ブラウズ</value>
+  </data>
+  <data name="ChangeTargetLanguageSetting" xml:space="preserve">
+    <value>目的言語を変更</value>
+  </data>
+  <data name="ConfirmButton" xml:space="preserve">
+    <value>確認</value>
+  </data>
   <data name="EmailEntryPlaceholder" xml:space="preserve">
     <value>メール</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>ログイン</value>
   </data>
+  <data name="LogoutTitle" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="NextButton" xml:space="preserve">
+    <value>次</value>
+  </data>
   <data name="PasswordEntryPlaceholder" xml:space="preserve">
     <value>パスワード</value>
+  </data>
+  <data name="PreviousButton" xml:space="preserve">
+    <value>前</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>プロフィール</value>
   </data>
   <data name="RegisterButton" xml:space="preserve">
     <value>登録</value>
@@ -132,8 +156,17 @@
   <data name="RegisterLabel" xml:space="preserve">
     <value>新規登録</value>
   </data>
+  <data name="SearchBarPlaceholder" xml:space="preserve">
+    <value>本を探す...</value>
+  </data>
   <data name="SearchTitle" xml:space="preserve">
     <value>検索</value>
+  </data>
+  <data name="SelectTargetLanguageTitle" xml:space="preserve">
+    <value>目的言語を選択</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>設定</value>
   </data>
   <data name="UsernameEntryPlaceholder" xml:space="preserve">
     <value>ユーザー名</value>

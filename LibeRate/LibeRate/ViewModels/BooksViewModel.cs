@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 
@@ -16,6 +17,7 @@ namespace LibeRate.ViewModels
         public ObservableCollection<Book> Books { get; set; }
         private int _pageNumber;
         private bool _previousButtonVisible;
+        private bool _nextButtonVisible;
         public int ItemsPerPage { get; set; }
         public Command RefreshCommand { get; }
         public Command<Book> ViewDetailCommand { get; }
@@ -24,12 +26,12 @@ namespace LibeRate.ViewModels
 
         public BooksViewModel()
         {
-            Title = "Browse";
 
             PageNumber= 1;
             ItemsPerPage = 25;
             PreviousButtonVisible = false;
-
+            NextButtonVisible = true;
+            
             RefreshCommand = new Command(Refresh);
             ViewDetailCommand = new Command<Book>(ViewDetail);
             NextPageCommand = new Command(NextPage);
@@ -40,6 +42,8 @@ namespace LibeRate.ViewModels
             LoadBooks();
         }
 
+        
+
         public int PageNumber
         {
             get => _pageNumber;
@@ -47,6 +51,16 @@ namespace LibeRate.ViewModels
             {
                 _pageNumber = value;
                 OnPropertyChanged(nameof(PageNumber));
+            }
+        }
+
+        public bool NextButtonVisible
+        {
+            get=> _nextButtonVisible;
+            set
+            {
+                _nextButtonVisible = value;
+                OnPropertyChanged(nameof(NextButtonVisible));
             }
         }
 
@@ -60,19 +74,37 @@ namespace LibeRate.ViewModels
             }
         }
 
+        public void Refresh()
+        {
+            IsBusy = true;
+            Books.Clear();
+            if(App.LanguageChanged==true) 
+            {
+                bookService.ResetService();
+                PageNumber = 1;
+                App.LanguageChanged = false;
+            }
+            LoadBooks();
+            IsBusy = false;
+        }
+
         private async void LoadBooks()
         {
             Books.Clear();
-            List<Book> result = await bookService.GetBooks("english", PageNumber, ItemsPerPage);
+            List<Book> result = await bookService.GetBooks(App.CurrentUser.TargetLanguage, PageNumber, ItemsPerPage);
             foreach(Book book in result)
             {
                 Books.Add(book);
             }
+            if(result.Count < ItemsPerPage)
+            {
+                NextButtonVisible = false;
+            } else
+            {
+                NextButtonVisible = true;
+            }
         }
 
-        private async void Refresh()
-        {
-        }
 
         private async void ViewDetail(Book book)
         {
@@ -97,6 +129,7 @@ namespace LibeRate.ViewModels
             {
                 PreviousButtonVisible= false;
             }
+            NextButtonVisible = true;
             LoadBooks();
 
         }
