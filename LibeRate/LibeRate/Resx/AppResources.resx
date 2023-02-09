@@ -124,7 +124,7 @@
     <value>Browse</value>
   </data>
   <data name="ChangeTargetLanguageSetting" xml:space="preserve">
-    <value>Change target language</value>
+    <value>Change Target Language</value>
   </data>
   <data name="ConfirmButton" xml:space="preserve">
     <value>Confirm</value>
@@ -170,5 +170,8 @@
   </data>
   <data name="UsernameEntryPlaceholder" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="ChangeDisplayLanguageSetting" xml:space="preserve">
+    <value>Change Display Language</value>
   </data>
 </root>

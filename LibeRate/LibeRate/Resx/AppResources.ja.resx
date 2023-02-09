@@ -171,4 +171,7 @@
   <data name="UsernameEntryPlaceholder" xml:space="preserve">
     <value>ユーザー名</value>
   </data>
+  <data name="ChangeDisplayLanguageSetting" xml:space="preserve">
+    <value>表示言語を変更</value>
+  </data>
 </root>

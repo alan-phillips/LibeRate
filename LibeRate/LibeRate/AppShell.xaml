@@ -3,6 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:LibeRate.Views"
        xmlns:resources="clr-namespace:LibeRate.Resx"
+       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
        Title="LibeRate"
        x:Class="LibeRate.AppShell">
 
@@ -88,24 +89,24 @@
         <ShellContent ContentTemplate="{DataTemplate local:SelectTargetLanguagePage}" />
     </ShellItem>
     
-    <FlyoutItem Title="{x:Static resources:AppResources.SearchTitle}" Icon="icon_about.png">
+    <FlyoutItem Title="{xct:Translate SearchTitle}" Icon="icon_about.png">
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{x:Static resources:AppResources.BrowseTitle}">
+    <FlyoutItem Title="{xct:Translate BrowseTitle}">
         <ShellContent Route="BooksPage" ContentTemplate="{DataTemplate local:BooksPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{x:Static resources:AppResources.ProfileTitle}">
+    <FlyoutItem Title="{xct:Translate ProfileTitle}">
         <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{x:Static resources:AppResources.SettingsTitle}">
+    <FlyoutItem Title="{xct:Translate SettingsTitle}">
         <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate local:SettingsPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
-    <MenuItem Text="{x:Static resources:AppResources.LogoutTitle}" 
+    <MenuItem Text="{xct:Translate LogoutTitle}" 
               StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
 

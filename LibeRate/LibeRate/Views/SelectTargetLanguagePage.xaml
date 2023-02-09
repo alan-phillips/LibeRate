@@ -9,7 +9,7 @@
              xmlns:resources="clr-namespace:LibeRate.Resx"
              Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled"
-             Title="{x:Static resources:AppResources.SelectTargetLanguageTitle}">
+             Title="{xct:Translate SelectTargetLanguageTitle}">
     <ContentPage.BindingContext>
         <viewmodels:SelectTargetLanguageViewModel />
     </ContentPage.BindingContext>
@@ -52,7 +52,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button VerticalOptions="Center" Text="{x:Static resources:AppResources.ConfirmButton}" 
+            <Button VerticalOptions="Center" Text="{xct:Translate ConfirmButton}" 
                     Command="{Binding ConfirmSelectionCommand}"/>
         </StackLayout>
     </ContentPage.Content>

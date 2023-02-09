@@ -7,7 +7,7 @@
              x:Class="LibeRate.Views.BooksPage"
              x:DataType="viewmodels:BooksViewModel"
              xmlns:resources="clr-namespace:LibeRate.Resx"
-             Title="{x:Static resources:AppResources.BrowseTitle}">
+             Title="{xct:Translate BrowseTitle}">
     
     <ContentPage.BindingContext>
         <viewmodels:BooksViewModel />
@@ -68,11 +68,11 @@
             </ListView>
 
             <StackLayout Orientation="Horizontal" Spacing="60"  HorizontalOptions="CenterAndExpand">
-                <Button VerticalOptions="Start" Text="{x:Static resources:AppResources.PreviousButton}" 
+                <Button VerticalOptions="Start" Text="{xct:Translate PreviousButton}" 
                         Command="{Binding PreviousPageCommand}"
                         IsEnabled="{Binding PreviousButtonVisible}" />
                 <Label VerticalOptions="CenterAndExpand" Text="{Binding PageNumber}"/>
-                <Button VerticalOptions="End" Text="{x:Static resources:AppResources.NextButton}" 
+                <Button VerticalOptions="End" Text="{xct:Translate NextButton}" 
                         Command="{Binding NextPageCommand}"
                         IsEnabled="{Binding NextButtonVisible}"/>
             </StackLayout>
