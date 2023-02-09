@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using LibeRate.Models;
+using LibeRate.Resx;
 using LibeRate.Services;
 using LibeRate.Views;
 using System;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +17,12 @@ namespace LibeRate
         public App()
         {
             CurrentUser= new User();
+
+
             InitializeComponent();
+
+            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => AppResources.Culture = LocalizationResourceManager.Current.CurrentCulture;
+            LocalizationResourceManager.Current.Init(AppResources.ResourceManager);
 
             MainPage = new AppShell();
         }

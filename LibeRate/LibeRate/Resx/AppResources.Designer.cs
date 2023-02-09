@@ -79,7 +79,16 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change target language.
+        ///   Looks up a localized string similar to Change Display Language.
+        /// </summary>
+        public static string ChangeDisplayLanguageSetting {
+            get {
+                return ResourceManager.GetString("ChangeDisplayLanguageSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Target Language.
         /// </summary>
         public static string ChangeTargetLanguageSetting {
             get {

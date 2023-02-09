@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.SearchPage"
              xmlns:resources="clr-namespace:LibeRate.Resx"
-             Title="{x:Static resources:AppResources.SearchTitle}">
+             Title="{xct:Translate SearchTitle}">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center">
-            <SearchBar Placeholder="{x:Static resources:AppResources.SearchBarPlaceholder}"
+            <SearchBar Placeholder="{xct:Translate SearchBarPlaceholder}"
                        VerticalOptions="Center">
                 
             </SearchBar>

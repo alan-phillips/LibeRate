@@ -5,7 +5,7 @@
              x:Class="LibeRate.Views.SettingsPage"
              xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              xmlns:resources="clr-namespace:LibeRate.Resx"
-             Title="{x:Static resources:AppResources.SettingsTitle}">
+             Title="{xct:Translate SettingsTitle}">
 
     <ContentPage.BindingContext>
         <viewmodels:SettingsViewModel />
@@ -22,10 +22,10 @@
             <TableView>
                 <TableRoot>
                     <TableSection>
-                        <TextCell Text="{x:Static resources:AppResources.ChangeTargetLanguageSetting}"
+                        <TextCell Text="{xct:Translate ChangeTargetLanguageSetting}"
                                   Command="{Binding ChangeTargetLanguageCommand}"
                                   />
-                        <TextCell Text="Change Display Language"
+                        <TextCell Text="{xct:Translate ChangeDisplayLanguageSetting}"
                                   Command="{Binding SetDisplayLanguageCommand}"
                                   />
                     </TableSection>
