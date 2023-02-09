@@ -1,4 +1,5 @@
-﻿using LibeRate.Models;
+﻿using Acr.UserDialogs;
+using LibeRate.Models;
 using LibeRate.Services;
 using LibeRate.Views;
 using System;
@@ -7,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 
 namespace LibeRate.ViewModels
@@ -23,6 +26,7 @@ namespace LibeRate.ViewModels
         public Command<Book> ViewDetailCommand { get; }
         public Command NextPageCommand { get; }
         public Command PreviousPageCommand { get; }
+        public Command OpenFiltersMenuCommand { get; }
 
         public BooksViewModel()
         {
@@ -36,6 +40,7 @@ namespace LibeRate.ViewModels
             ViewDetailCommand = new Command<Book>(ViewDetail);
             NextPageCommand = new Command(NextPage);
             PreviousPageCommand = new Command(PreviousPage);
+            OpenFiltersMenuCommand = new Command(async () => await OpenFiltersMenu());
 
             bookService = DependencyService.Get<IBookService>();
             Books = new ObservableCollection<Book>();
@@ -131,7 +136,18 @@ namespace LibeRate.ViewModels
             }
             NextButtonVisible = true;
             LoadBooks();
-
         }
+
+        private async Task OpenFiltersMenu()
+        {
+            var r = await Shell.Current.Navigation.ShowPopupAsync(new Views.Popups.BrowserFiltersPopup());
+            if(r != null)
+            {
+                Dictionary<string, object> results = (Dictionary<string, object>)r;
+                UserDialogs.Instance.Alert((string)results["filter"]);
+            }
+            
+        }
+
     }
 }

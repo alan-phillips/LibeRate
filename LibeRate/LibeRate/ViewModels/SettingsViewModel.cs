@@ -1,4 +1,5 @@
-﻿using LibeRate.Resx;
+﻿using LibeRate.Helpers;
+using LibeRate.Resx;
 using LibeRate.Services;
 using LibeRate.Views;
 using System;
@@ -42,6 +43,7 @@ namespace LibeRate.ViewModels
             if (selection != "Cancel")
             {
                 LocalizationResourceManager.Current.CurrentCulture = CultureInfo.GetCultureInfo(languages[selection]);
+                Settings.SelectedLanguage = languages[selection];   
             }
         }
     }

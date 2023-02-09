@@ -18,6 +18,11 @@
             <xct:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Filter"
+                     Command="{Binding OpenFiltersMenuCommand}"/>
+    </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center">
