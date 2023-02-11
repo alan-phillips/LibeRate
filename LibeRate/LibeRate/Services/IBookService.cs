@@ -10,7 +10,7 @@ namespace LibeRate.Services
     public interface IBookService
     {
         Task<Book> GetBook(string languageID, string ID);
-        Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage);
+        Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous);
 
         void ResetService();
     }

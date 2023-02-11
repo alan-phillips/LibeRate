@@ -23,7 +23,7 @@ namespace LibeRate.Droid.Services
     public class BookService : Java.Lang.Object, IBookService, IOnCompleteListener
     {
         List<Book> books = new List<Book>();
-        List<DocumentSnapshot> pageBottoms = new List<DocumentSnapshot>();
+        Stack<DocumentSnapshot> pageBottoms = new Stack<DocumentSnapshot>();
         bool hasReadBooks = false;
 
         public async Task<Book> GetBook(string languageID, string ID)
@@ -44,23 +44,42 @@ namespace LibeRate.Droid.Services
             }
             return books.ElementAt(0);
         }
-        public async Task<List<Book>> GetBooks(string languageID, int pageNumber, int itemsPerPage)
+        public async Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous)
         {
             books.Clear();
             hasReadBooks = false;
             FirebaseFirestore db = FirebaseFirestore.Instance;
 
-            Query query;
-            if (pageNumber== 1)
+            int itemsPerPage = (int)filterSettings["items_per_page"];
+
+            CollectionReference cr = db.Collection(languageID + "-books");
+
+            Query query; 
+
+            if ((string)filterSettings["search_query"] != "")
             {
-                query = db.Collection(languageID + "-books")
-                    .OrderBy("difficulty_rating")
-                    .Limit(itemsPerPage);
+                string searchQuery = (string)filterSettings["search_query"];
+                query = cr.WhereGreaterThanOrEqualTo("title", searchQuery)
+                    .WhereLessThanOrEqualTo("title", searchQuery+"\uf8ff");
             } else
             {
-                query = db.Collection(languageID + "-books")
-                    .OrderBy("difficulty_rating")
-                    .StartAfter(pageBottoms.ElementAt(pageNumber-2))
+                query = cr.OrderBy("difficulty_rating")
+                    .WhereGreaterThanOrEqualTo("difficulty_rating", (int)filterSettings["lower_difficulty"])
+                    .WhereLessThanOrEqualTo("difficulty_rating", (int)filterSettings["higher_difficulty"]);
+            }
+
+            if (pageNumber== 1)
+            {
+                pageBottoms.Clear();
+                query = query.Limit(itemsPerPage);
+            } else
+            {
+                if (previous) 
+                { 
+                    pageBottoms.Pop();
+                    pageBottoms.Pop();
+                }
+                query = query.StartAfter(pageBottoms.Peek())
                     .Limit(itemsPerPage);
             }
             
@@ -92,10 +111,13 @@ namespace LibeRate.Droid.Services
                 }
                 if(!pageBottoms.Contains(documents.Last())) 
                 {
-                    pageBottoms.Add(documents.Last());  
+                    pageBottoms.Push(documents.Last());  
                 }
-                hasReadBooks= true;
+            } else
+            {
+                pageBottoms.Push(null);
             }
+            hasReadBooks = true;
         }
 
         public void ResetService()

@@ -3,12 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.SearchPage"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              xmlns:resources="clr-namespace:LibeRate.Resx"
              Title="{xct:Translate SearchTitle}">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:SearchViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center">
-            <SearchBar Placeholder="{xct:Translate SearchBarPlaceholder}"
-                       VerticalOptions="Center">
+            <SearchBar x:Name="searchBar" 
+                Placeholder="{xct:Translate SearchBarPlaceholder}"
+                       VerticalOptions="Center"
+                       SearchCommand="{Binding PerformSearchCommand}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}">
                 
             </SearchBar>
         </StackLayout>
