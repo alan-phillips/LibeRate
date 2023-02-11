@@ -13,10 +13,10 @@ namespace LibeRate.Views.Popups
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class BrowserFiltersPopup : Popup
 	{
-		public BrowserFiltersPopup ()
+		public BrowserFiltersPopup (Dictionary<string, object> CurrentFilterSettings)
 		{
 			InitializeComponent ();
-            this.BindingContext = new BrowserFiltersPopupViewModel();
+            this.BindingContext = new BrowserFiltersPopupViewModel(CurrentFilterSettings);
         }
 
 		private void Button_OnClicked(object sender, EventArgs e)

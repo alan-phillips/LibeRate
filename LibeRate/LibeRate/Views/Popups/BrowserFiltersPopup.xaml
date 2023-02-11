@@ -34,8 +34,14 @@
 
     <StackLayout Style="{StaticResource PopupLayout}">
 
-        <Picker ItemsSource="{Binding Filters}"
+        <Picker Title="Sort by"
+                ItemsSource="{Binding Filters}"
                 SelectedItem="{Binding SelectedFilter}"/>
+        
+        <Picker Title="Items Per Page" 
+                ItemsSource="{Binding ItemsPerPage}"
+                SelectedItem="{Binding SelectedItemsPerPage}"/>
+        
         <xct:RangeSlider x:Name="Difficulty"
                          MinimumValue="0"
                          MaximumValue="50"

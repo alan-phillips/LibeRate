@@ -9,45 +9,66 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace LibeRate.ViewModels
 {
-    public class BooksViewModel : BaseViewModel
+    public class BooksViewModel : BaseViewModel, IQueryAttributable
     {
         IBookService bookService;
         public ObservableCollection<Book> Books { get; set; }
+        private Dictionary<string, object> filterSettings;
         private int _pageNumber;
         private bool _previousButtonVisible;
         private bool _nextButtonVisible;
-        public int ItemsPerPage { get; set; }
-        public Command RefreshCommand { get; }
-        public Command<Book> ViewDetailCommand { get; }
-        public Command NextPageCommand { get; }
-        public Command PreviousPageCommand { get; }
-        public Command OpenFiltersMenuCommand { get; }
+        public ICommand RefreshCommand { get; }
+        public IAsyncCommand<Book> ViewDetailCommand { get; }
+        public ICommand NextPageCommand { get; }
+        public ICommand PreviousPageCommand { get; }
+        public ICommand OpenFiltersMenuCommand { get; }
 
         public BooksViewModel()
         {
+            filterSettings = new Dictionary<string, object>
+            {
+                { "search_query", "" },
+                { "items_per_page", 3 },
+                { "filter", "Popularity" },
+                { "lower_difficulty", 0 },
+                { "higher_difficulty", 50 }
+            };
 
-            PageNumber= 1;
-            ItemsPerPage = 25;
+            PageNumber = 1;
             PreviousButtonVisible = false;
             NextButtonVisible = true;
             
             RefreshCommand = new Command(Refresh);
-            ViewDetailCommand = new Command<Book>(ViewDetail);
+            ViewDetailCommand = new AsyncCommand<Book>(book => ViewDetail(book));
             NextPageCommand = new Command(NextPage);
             PreviousPageCommand = new Command(PreviousPage);
             OpenFiltersMenuCommand = new Command(async () => await OpenFiltersMenu());
 
             bookService = DependencyService.Get<IBookService>();
             Books = new ObservableCollection<Book>();
-            LoadBooks();
         }
 
-        
+        public void ApplyQueryAttributes(IDictionary<string, string> query)
+        {
+            if(query.Count > 0) 
+            {
+                string searchQuery = HttpUtility.UrlDecode(query["query"]);
+                filterSettings["search_query"] = searchQuery;
+            } else
+            {
+                filterSettings["search_query"] = "";
+            }
+            PageNumber= 1;
+            LoadBooks(false);
+        }
 
         public int PageNumber
         {
@@ -81,7 +102,6 @@ namespace LibeRate.ViewModels
 
         public void Refresh()
         {
-            IsBusy = true;
             Books.Clear();
             if(App.LanguageChanged==true) 
             {
@@ -89,29 +109,32 @@ namespace LibeRate.ViewModels
                 PageNumber = 1;
                 App.LanguageChanged = false;
             }
-            LoadBooks();
-            IsBusy = false;
+            LoadBooks(false);
         }
 
-        private async void LoadBooks()
+        private async void LoadBooks(bool previous)
         {
+            if(IsBusy) { return; }
+
+            IsBusy= true;
             Books.Clear();
-            List<Book> result = await bookService.GetBooks(App.CurrentUser.TargetLanguage, PageNumber, ItemsPerPage);
+            List<Book> result = await bookService.GetBooks(App.CurrentUser.TargetLanguage, PageNumber, filterSettings, previous);
             foreach(Book book in result)
             {
                 Books.Add(book);
             }
-            if(result.Count < ItemsPerPage)
+            if(result.Count < (int)filterSettings["items_per_page"])
             {
                 NextButtonVisible = false;
             } else
             {
                 NextButtonVisible = true;
             }
+            IsBusy= false;
         }
 
 
-        private async void ViewDetail(Book book)
+        private async Task ViewDetail(Book book)
         {
             var route = $"{nameof(BookPage)}?BookId={book.Id}&Title={book.Title}&Author={book.Author}&Img={book.ImageURL}&Diff={book.DifficultyRating}";
             await Shell.Current.GoToAsync(route);
@@ -122,7 +145,7 @@ namespace LibeRate.ViewModels
             Books.Clear();
             PageNumber++;
             PreviousButtonVisible = true;
-            LoadBooks();
+            LoadBooks(false);
 
         }
 
@@ -135,16 +158,19 @@ namespace LibeRate.ViewModels
                 PreviousButtonVisible= false;
             }
             NextButtonVisible = true;
-            LoadBooks();
+            LoadBooks(true);
         }
 
         private async Task OpenFiltersMenu()
         {
-            var r = await Shell.Current.Navigation.ShowPopupAsync(new Views.Popups.BrowserFiltersPopup());
-            if(r != null)
+            var popup = new Views.Popups.BrowserFiltersPopup(filterSettings);
+            var popupResult = await Shell.Current.Navigation.ShowPopupAsync(popup);
+            if(popupResult != null)
             {
-                Dictionary<string, object> results = (Dictionary<string, object>)r;
-                UserDialogs.Instance.Alert((string)results["filter"]);
+                filterSettings = (Dictionary<string, object>)popupResult;
+                PageNumber= 1;
+                PreviousButtonVisible = false;
+                Refresh();
             }
             
         }
