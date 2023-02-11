@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:LibeRate.Models"
              xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             xmlns:converters="clr-namespace:LibeRate.Helpers"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.BooksPage"
              x:DataType="viewmodels:BooksViewModel"
@@ -17,6 +18,7 @@
         <ResourceDictionary>
             <xct:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
         </ResourceDictionary>
+        <converters:DifficultyColourConverter x:Key="colourConvert"/>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
@@ -59,7 +61,11 @@
                                                 VerticalOptions="Center" />
                                         </StackLayout>
 
-                                        <Frame MinimumWidthRequest="30" WidthRequest="30" HeightRequest="30" CornerRadius="15" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Maroon">
+                                        <Frame MinimumWidthRequest="30" WidthRequest="30" 
+                                               HeightRequest="30" CornerRadius="15" 
+                                               HorizontalOptions="EndAndExpand" VerticalOptions="Start" 
+                                               Margin="0" Padding="0" 
+                                               BackgroundColor="{Binding DifficultyRating, Converter={StaticResource colourConvert}}">
                                             <Label Text="{Binding DifficultyRating}" 
                                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                                         </Frame>
