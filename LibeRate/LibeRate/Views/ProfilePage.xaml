@@ -1,12 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              x:Class="LibeRate.Views.ProfilePage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ProfileViewModel/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Profile Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding Profile.Username}"
+                VerticalOptions="Start" 
+                HorizontalOptions="StartAndExpand" />
+            <Label Text="{Binding Profile.TargetLanguage}"
+                   VerticalOptions="Start"
+                   HorizontalOptions="StartAndExpand"/>
+            <Label Text="{Binding Profile.AccountCreated}"
+                   VerticalOptions="Start"
+                   HorizontalOptions="StartAndExpand"/>
+
+            <Button Text="View Library"
+                    Command="{Binding ViewLibraryCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

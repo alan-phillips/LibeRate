@@ -118,11 +118,14 @@ namespace LibeRate.ViewModels
 
             IsBusy= true;
             Books.Clear();
+
             List<Book> result = await bookService.GetBooks(App.CurrentUser.TargetLanguage, PageNumber, filterSettings, previous);
+            
             foreach(Book book in result)
             {
                 Books.Add(book);
             }
+            
             if(result.Count < (int)filterSettings["items_per_page"])
             {
                 NextButtonVisible = false;
@@ -130,6 +133,7 @@ namespace LibeRate.ViewModels
             {
                 NextButtonVisible = true;
             }
+            
             IsBusy= false;
         }
 
