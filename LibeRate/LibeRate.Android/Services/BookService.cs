@@ -20,52 +20,37 @@ using Android.Gms.Tasks;
 
 namespace LibeRate.Droid.Services
 {
-    public class BookService : Java.Lang.Object, IBookService, IOnCompleteListener
+    public class BookService : IBookService
     {
-        List<Book> books = new List<Book>();
         Stack<DocumentSnapshot> pageBottoms = new Stack<DocumentSnapshot>();
-        bool hasReadBooks = false;
 
         public async Task<Book> GetBook(string languageID, string ID)
         {
-            books.Clear();
-            hasReadBooks = false;
-            FirebaseFirestore db = FirebaseFirestore.Instance;
-
-            DocumentReference query = db.Collection(languageID + "-books")
-                .Document(ID);
-
-            query.Get(Source.Cache).AddOnCompleteListener(this);
-
-            for (int i = 0; i < 50; i++)
-            {
-                await System.Threading.Tasks.Task.Delay(100);
-                if (hasReadBooks) break;
-            }
-            return books.ElementAt(0);
+            return null;
         }
+
         public async Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous)
         {
-            books.Clear();
-            hasReadBooks = false;
             FirebaseFirestore db = FirebaseFirestore.Instance;
 
             int itemsPerPage = (int)filterSettings["items_per_page"];
+            string searchQuery = (string)filterSettings["search_query"];
+            int lowerDifficulty = (int)filterSettings["lower_difficulty"];
+            int higherDifficulty = (int)filterSettings["higher_difficulty"];
 
             CollectionReference cr = db.Collection(languageID + "-books");
 
             Query query; 
 
-            if ((string)filterSettings["search_query"] != "")
+            if (searchQuery != "")
             {
-                string searchQuery = (string)filterSettings["search_query"];
                 query = cr.WhereGreaterThanOrEqualTo("title", searchQuery)
                     .WhereLessThanOrEqualTo("title", searchQuery+"\uf8ff");
             } else
             {
                 query = cr.OrderBy("difficulty_rating")
-                    .WhereGreaterThanOrEqualTo("difficulty_rating", (int)filterSettings["lower_difficulty"])
-                    .WhereLessThanOrEqualTo("difficulty_rating", (int)filterSettings["higher_difficulty"]);
+                    .WhereGreaterThanOrEqualTo("difficulty_rating", lowerDifficulty)
+                    .WhereLessThanOrEqualTo("difficulty_rating", higherDifficulty);
             }
 
             if (pageNumber== 1)
@@ -83,20 +68,16 @@ namespace LibeRate.Droid.Services
                     .Limit(itemsPerPage);
             }
             
-            query.Get().AddOnCompleteListener(this);
-            
-            for (int i = 0; i < 50; i++)
-            {
-                await System.Threading.Tasks.Task.Delay(100);
-                if (hasReadBooks) break;
-            }
+            var result = await query.Get().ToAwaitableTask();
+            List<Book> books = ConvertFirestoreResultToBookList(result);
 
             return books;
         }
 
-        public void OnComplete(Android.Gms.Tasks.Task task)
+        private List<Book> ConvertFirestoreResultToBookList(Java.Lang.Object result)
         {
-            var snapshot = (QuerySnapshot)task.Result;
+            var snapshot = (QuerySnapshot)result;
+            List<Book> books = new List<Book>();
             if(!snapshot.IsEmpty)
             {
                 var documents = snapshot.Documents;
@@ -117,12 +98,11 @@ namespace LibeRate.Droid.Services
             {
                 pageBottoms.Push(null);
             }
-            hasReadBooks = true;
+            return books;
         }
 
         public void ResetService()
         {
-            books.Clear();
             pageBottoms.Clear();
         }
     }

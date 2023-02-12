@@ -61,7 +61,7 @@ namespace LibeRate.Droid.Services
                 { "owned_count", ownedCount },
                 { "read_count", readCount }
             };
-            library.Document("library-data").Set(libraryData);
+            await library.Document("library-data").Set(libraryData);
         }
     }
 }

@@ -22,22 +22,17 @@ using AndroidX.Core.Util;
 
 namespace LibeRate.Droid.Services
 {
-    public class UserService : Java.Lang.Object, IUserService, IOnCompleteListener
+    public class UserService : IUserService
     {
-        User user = new User(); 
-        bool hasReadUser = false;
         public async Task<User> GetUser(string userId)
         {
-            user.Id= userId;
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            db.Collection("users").Document(userId).Get().AddOnCompleteListener(this);
-            for (var i = 0; i < 50; i++)
-            {
-                if (hasReadUser == true) break;
-                await System.Threading.Tasks.Task.Delay(100);
-            }
+
+            var result = await db.Collection("users").Document(userId).Get().ToAwaitableTask();
+            User user = ConvertFirestoreResultToUser(result);
             return user;
         }
+
         public async Task CreateUserProfile(string username)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
@@ -60,17 +55,19 @@ namespace LibeRate.Droid.Services
             await db.Collection("users").Document(App.CurrentUser.Id).Set(data, SetOptions.Merge());
         }
 
-        public void OnComplete(Android.Gms.Tasks.Task task)
+        private User ConvertFirestoreResultToUser(Java.Lang.Object result)
         {
-            var snapshot = (DocumentSnapshot)task.Result;
+            var snapshot = (DocumentSnapshot)result;
+            User user = new User();
+
             if (snapshot.Exists())
             {
                 user.Id = snapshot.Id;
                 user.Username = snapshot.Get("username").ToString();
                 user.TargetLanguage = snapshot.Get("target_language").ToString();
-
-                hasReadUser = true;
             }
+
+            return user;
         }
     }
 }
