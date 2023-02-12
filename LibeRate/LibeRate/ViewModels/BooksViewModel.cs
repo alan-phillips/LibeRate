@@ -67,7 +67,7 @@ namespace LibeRate.ViewModels
                 filterSettings["search_query"] = "";
             }
             PageNumber= 1;
-            LoadBooks(false);
+            Task.Run(async () => await LoadBooks(false));
         }
 
         public int PageNumber
@@ -109,10 +109,10 @@ namespace LibeRate.ViewModels
                 PageNumber = 1;
                 App.LanguageChanged = false;
             }
-            LoadBooks(false);
+            Task.Run(async () => await LoadBooks(false));
         }
 
-        private async void LoadBooks(bool previous)
+        private async Task LoadBooks(bool previous)
         {
             if(IsBusy) { return; }
 
@@ -146,15 +146,17 @@ namespace LibeRate.ViewModels
 
         private void NextPage()
         {
+            if(IsBusy) { return; }
             Books.Clear();
             PageNumber++;
             PreviousButtonVisible = true;
-            LoadBooks(false);
+            Task.Run(async () => await LoadBooks(false));
 
         }
 
         private void PreviousPage()
         {
+            if (IsBusy) { return; }
             Books.Clear();
             PageNumber--;
             if(PageNumber == 1)
@@ -162,7 +164,7 @@ namespace LibeRate.ViewModels
                 PreviousButtonVisible= false;
             }
             NextButtonVisible = true;
-            LoadBooks(true);
+            Task.Run(async () => await LoadBooks(true));
         }
 
         private async Task OpenFiltersMenu()

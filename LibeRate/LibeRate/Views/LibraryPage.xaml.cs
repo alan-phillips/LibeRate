@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace LibeRate.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LibraryPage : ContentPage
+	public partial class LibraryPage : TabbedPage
 	{
 		public LibraryPage ()
 		{
