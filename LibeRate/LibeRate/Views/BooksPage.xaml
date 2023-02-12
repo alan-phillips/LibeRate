@@ -41,6 +41,7 @@
                         Command="{Binding ViewDetailCommand}"                
                         EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
                 </ListView.Behaviors>
+                
                 <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Book">
                     <ViewCell>
@@ -76,6 +77,7 @@
                         </ViewCell>
                 </DataTemplate>
                 </ListView.ItemTemplate>
+                
             </ListView>
 
             <StackLayout Orientation="Horizontal" Spacing="60"  HorizontalOptions="CenterAndExpand">

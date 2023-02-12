@@ -12,6 +12,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Profile.Username}"
+                   FontSize="Large"
                 VerticalOptions="Start" 
                 HorizontalOptions="StartAndExpand" />
             <Label Text="{Binding Profile.TargetLanguage}"
@@ -22,6 +23,8 @@
                    HorizontalOptions="StartAndExpand"/>
 
             <Button Text="View Library"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="Center"
                     Command="{Binding ViewLibraryCommand}"/>
         </StackLayout>
     </ContentPage.Content>

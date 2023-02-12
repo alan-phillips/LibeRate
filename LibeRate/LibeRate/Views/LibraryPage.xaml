@@ -1,12 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LibeRate.Views.LibraryPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+            xmlns:model="clr-namespace:LibeRate.Models"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+            xmlns:converters="clr-namespace:LibeRate.Helpers"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="LibeRate.Views.LibraryPage"
+            ItemsSource="{Binding Libraries}">
+
+    <TabbedPage.BindingContext>
+        <viewmodels:LibraryViewModel />
+    </TabbedPage.BindingContext>
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+        </ResourceDictionary>
+        <converters:DifficultyColourConverter x:Key="colourConvert"/>
+    </TabbedPage.Resources>
+
+    <TabbedPage.ItemTemplate>
+        <DataTemplate>
+            <ContentPage Title="{Binding Name}" IconImageSource="">
+                <StackLayout VerticalOptions="Center">
+                    <ListView
+                        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                        ItemsSource="{Binding .}"
+                        RefreshCommand="{Binding RefreshCommand}"
+                        Style="{StaticResource BookListView}"
+                        SelectionMode="None"
+                        CachingStrategy="RecycleElement">
+                        
+                        <ListView.Behaviors>
+                            <xct:EventToCommandBehavior
+                                EventName="ItemTapped"
+                                Command="{Binding ViewDetailCommand}"                
+                                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+                        </ListView.Behaviors>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Book">
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                    </ViewCell.ContextActions>
+                                    <Grid Padding="5">
+                                        <Frame CornerRadius="10" HasShadow="True">
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <Image Source="{Binding ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Start"/>
+                                                <StackLayout HorizontalOptions="Start">
+                                                    <Label  
+                                                FontSize="Large"
+                                                Text="{Binding Title}"
+                                                VerticalOptions="Center" />
+                                                    <Label
+                                                FontSize="Medium"
+                                                Text="{Binding Author}"
+                                                VerticalOptions="Center" />
+                                                </StackLayout>
+
+                                                <Frame MinimumWidthRequest="30" WidthRequest="30" 
+                                               HeightRequest="30" CornerRadius="15" 
+                                               HorizontalOptions="EndAndExpand" VerticalOptions="Start" 
+                                               Margin="0" Padding="0" 
+                                               BackgroundColor="{Binding DifficultyRating, Converter={StaticResource colourConvert}}">
+                                                    <Label Text="{Binding DifficultyRating}" 
+                                                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                                </Frame>
+
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </StackLayout>
+            </ContentPage>
+        </DataTemplate>
+    </TabbedPage.ItemTemplate>
+</TabbedPage>

@@ -23,6 +23,7 @@ namespace LibeRate.ViewModels
             DisplayBook = new Book();
             _dialogService = new DialogService();   
             AddToLibraryCommand= new Command(async () => await AddToLibrary());
+
         }
 
         public Book DisplayBook { get { return displayBook; } set { displayBook = value; OnPropertyChanged(nameof(DisplayBook)); } }
@@ -30,15 +31,15 @@ namespace LibeRate.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, string> query)
         {
-            Book selectedBook = new Book(HttpUtility.UrlDecode(query["BookId"]),
-                HttpUtility.UrlDecode(query["Title"]),
-                HttpUtility.UrlDecode(query["Author"]),
-                HttpUtility.UrlDecode(query["Img"]),
-                int.Parse(HttpUtility.UrlDecode(query["Diff"])));
+            string bookId = HttpUtility.UrlDecode(query["BookId"]);
 
-            DisplayBook= selectedBook;
+            Task.Run(async () => await LoadBook(bookId) );
         }
 
+        private async Task LoadBook(string bookId)
+        {
+            DisplayBook = await bookService.GetBook(App.CurrentUser.TargetLanguage, bookId);
+        }
 
         private async Task AddToLibrary()
         {

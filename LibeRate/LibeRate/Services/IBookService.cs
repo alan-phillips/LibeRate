@@ -11,7 +11,7 @@ namespace LibeRate.Services
     {
         Task<Book> GetBook(string languageID, string ID);
         Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous);
-
+        Task<List<Book>> GetLibraryBooks(string userID, string languageID, string status);
         void ResetService();
     }
 }

@@ -17,6 +17,8 @@ using Java.Util;
 using Java.Interop;
 using Firebase.Annotations;
 using Android.Gms.Tasks;
+using Xamarin.CommunityToolkit.UI.Views;
+using Android.Text.Method;
 
 namespace LibeRate.Droid.Services
 {
@@ -26,7 +28,13 @@ namespace LibeRate.Droid.Services
 
         public async Task<Book> GetBook(string languageID, string ID)
         {
-            return null;
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            DocumentReference dr = db.Collection(languageID + "-books").Document(ID);
+
+            var result = await dr.Get().ToAwaitableTask();
+            Book book = ConvertFirestoreResultToBook(result);
+
+            return book;
         }
 
         public async Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous)
@@ -74,6 +82,39 @@ namespace LibeRate.Droid.Services
             return books;
         }
 
+        public async Task<List<Book>> GetLibraryBooks(string userID,string languageID, string status)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference cr = db.Collection("users").Document(userID).Collection(languageID + "-library");
+            
+            var result = await cr.WhereEqualTo("status", status).Get().ToAwaitableTask();
+            List<string> bookIds = ConvertFirestoreResultToIdList(result);
+            List<Book> books = new List<Book>();
+
+            foreach(string bookId in bookIds)
+            {
+                Book b = await GetBook(languageID, bookId);
+                books.Add(b);
+            }
+
+            return books;
+        }
+
+        private Book ConvertFirestoreResultToBook(Java.Lang.Object result)
+        {
+            var snapshot = (DocumentSnapshot)result;
+            Book book = new Book(); 
+            if(snapshot.Exists())
+            {
+                book.Id= snapshot.Id;
+                book.Title = snapshot.Get("title").ToString();
+                book.Author = snapshot.Get("author").ToString();
+                book.ImageURL = snapshot.Get("cover_image").ToString();
+                book.DifficultyRating = (int)snapshot.Get("difficulty_rating");
+            }
+            return book;
+        }
+
         private List<Book> ConvertFirestoreResultToBookList(Java.Lang.Object result)
         {
             var snapshot = (QuerySnapshot)result;
@@ -87,7 +128,7 @@ namespace LibeRate.Droid.Services
                         doc.Get("title").ToString(), 
                         doc.Get("author").ToString(), 
                         doc.Get("cover_image").ToString(), 
-                        ((int)doc.Get("difficulty_rating")));
+                        (int)doc.Get("difficulty_rating"));
                     books.Add(b);
                 }
                 if(!pageBottoms.Contains(documents.Last())) 
@@ -99,6 +140,21 @@ namespace LibeRate.Droid.Services
                 pageBottoms.Push(null);
             }
             return books;
+        }
+
+        private List<string> ConvertFirestoreResultToIdList(Java.Lang.Object result)
+        {
+            var snapshot = (QuerySnapshot)result;
+            List<string> bookIds= new List<string>();
+            if(!snapshot.IsEmpty)
+            {
+                var documents = snapshot.Documents;
+                foreach (DocumentSnapshot doc in documents)
+                {
+                    bookIds.Add(doc.Id);    
+                }
+            }
+            return bookIds;
         }
 
         public void ResetService()
