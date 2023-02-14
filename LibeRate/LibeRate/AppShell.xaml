@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:LibeRate.Views"
+       xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
        xmlns:resources="clr-namespace:LibeRate.Resx"
        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
        Title="LibeRate"
@@ -12,6 +13,10 @@
     
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
     -->
+
+    <Shell.BindingContext>
+        <viewmodels:ShellViewModel />
+    </Shell.BindingContext>
 
     <Shell.Resources>
         <ResourceDictionary>
@@ -99,6 +104,10 @@
 
     <FlyoutItem Title="{xct:Translate ProfileTitle}">
         <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Grade Books" IsVisible="{Binding CanGradeBooks}">
+        <ShellContent Route="GradeBooksPage" ContentTemplate="{DataTemplate local:GradeBooksPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="{xct:Translate SettingsTitle}">

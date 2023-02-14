@@ -12,6 +12,7 @@ using LibeRate.Services;
 using System.Threading.Tasks;
 using Firebase.Firestore;
 using Android.Gms.Extensions;
+using LibeRate.Models;
 
 namespace LibeRate.Droid.Services
 {
@@ -21,12 +22,40 @@ namespace LibeRate.Droid.Services
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
             CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language+"-library");
-            JavaDictionary<string, object> libraryBook = new JavaDictionary<string, object>
+
+            var result = await library.Document("library-data").Get().ToAwaitableTask();
+            JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
+
+            if(!books.ContainsKey(bookId))
             {
-                { "status", status }
-            };
-            await library.Document(bookId).Set(libraryBook);
+                await db.Collection(language + "-books").Document(bookId).Update("user_count", FieldValue.Increment(1));
+            }
+
+            library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+            await library.Document("library-data").Update("books."+bookId, status);
             UpdateCounts(language);
+        }
+
+        public async Task<List<Book>> GetLibraryBooks(string language, string status)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+
+            var result = await library.Document("library-data").Get().ToAwaitableTask();
+            JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
+            
+            List<string> bookIds= new List<string>();
+            foreach(var book in books)
+            {
+                if(book.Value == status)
+                {
+                    bookIds.Add(book.Key);
+                }
+            }
+
+            BookService bs = new BookService();
+            List<Book> resultBooks = await bs.GetBooksFromList(language, bookIds);
+            return resultBooks;
         }
 
         private async Task UpdateCounts(string language)
@@ -35,33 +64,47 @@ namespace LibeRate.Droid.Services
             FirebaseFirestore db = FirebaseFirestore.Instance;
             CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
 
-            Query query = library.WhereEqualTo("status", "Wishlist");
-            AggregateQuery aggQuery = query.Count();
-            AggregateQuerySnapshot result = (AggregateQuerySnapshot) await aggQuery.Get(AggregateSource.Server);
-            long wishlistCount = result.Count;
+            var result = await library.Document("library-data").Get().ToAwaitableTask();
+            JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
+            
+            long wishlistCount = 0;
+            long ownedCount = 0;
+            long readCount = 0;
 
-            library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
-
-            Query query2 = library.WhereEqualTo("status", "Owned");
-            AggregateQuery aggQuery2 = query2.Count();
-            AggregateQuerySnapshot result2 = (AggregateQuerySnapshot)await aggQuery2.Get(AggregateSource.Server);
-            long ownedCount = result2.Count;
-
-            library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
-
-            Query query3 = library.WhereEqualTo("status", "Read");
-            AggregateQuery aggQuery3 = query3.Count();
-            AggregateQuerySnapshot result3 = (AggregateQuerySnapshot)await aggQuery3.Get(AggregateSource.Server);
-            long readCount = result3.Count;
-
-            library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+            foreach(var book in books) 
+            { 
+                switch (book.Value)
+                {
+                    case "Wishlist":
+                        wishlistCount++;
+                        break;
+                    case "Owned":
+                        ownedCount++;
+                        break;
+                    case "Read":
+                        readCount++;
+                        break;
+                }
+                    
+            }
             JavaDictionary<string, object> libraryData = new JavaDictionary<string, object>
             {
                 { "wishlist_count", wishlistCount },
                 { "owned_count", ownedCount },
                 { "read_count", readCount }
             };
-            await library.Document("library-data").Set(libraryData);
+            await library.Document("library-data").Set(libraryData, SetOptions.Merge());
+        }
+
+        private JavaDictionary<string, string> ConvertFirestoreResultToDictionary(Java.Lang.Object result)
+        {
+            var snapshot = (DocumentSnapshot)result;
+            JavaDictionary<string, string> dict = new JavaDictionary<string, string>();  
+            if(snapshot.Exists())
+            {
+                dict = snapshot.Get("books").JavaCast<JavaDictionary<string, string>>();
+            }
+            return dict;
         }
     }
 }

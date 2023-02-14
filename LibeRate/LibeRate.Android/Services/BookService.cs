@@ -82,13 +82,8 @@ namespace LibeRate.Droid.Services
             return books;
         }
 
-        public async Task<List<Book>> GetLibraryBooks(string userID,string languageID, string status)
+        public async Task<List<Book>> GetBooksFromList(string languageID, List<string> bookIds)
         {
-            FirebaseFirestore db = FirebaseFirestore.Instance;
-            CollectionReference cr = db.Collection("users").Document(userID).Collection(languageID + "-library");
-            
-            var result = await cr.WhereEqualTo("status", status).Get().ToAwaitableTask();
-            List<string> bookIds = ConvertFirestoreResultToIdList(result);
             List<Book> books = new List<Book>();
 
             foreach(string bookId in bookIds)
