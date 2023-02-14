@@ -43,22 +43,39 @@ namespace LibeRate.Droid.Services
 
             int itemsPerPage = (int)filterSettings["items_per_page"];
             string searchQuery = (string)filterSettings["search_query"];
+            string filter = (string)filterSettings["filter"];
             int lowerDifficulty = (int)filterSettings["lower_difficulty"];
             int higherDifficulty = (int)filterSettings["higher_difficulty"];
 
-            CollectionReference cr = db.Collection(languageID + "-books");
-
-            Query query; 
+            Query query = db.Collection(languageID + "-books");
 
             if (searchQuery != "")
             {
-                query = cr.WhereGreaterThanOrEqualTo("title", searchQuery)
+                query = query.WhereGreaterThanOrEqualTo("title", searchQuery)
                     .WhereLessThanOrEqualTo("title", searchQuery+"\uf8ff");
             } else
             {
-                query = cr.OrderBy("difficulty_rating")
+                var dir = Query.Direction.Descending;
+                switch (filter)
+                {
+                    case "Popularity":
+                        query = query.OrderBy("user_count", dir);
+                        break;
+
+                    case "Difficulty (Ascending)":
+                        dir = Query.Direction.Ascending;
+                        query = query.OrderBy("difficulty_rating", dir)
                     .WhereGreaterThanOrEqualTo("difficulty_rating", lowerDifficulty)
                     .WhereLessThanOrEqualTo("difficulty_rating", higherDifficulty);
+                        break;
+
+                    case "Difficulty (Descending)":
+                        query = query.OrderBy("difficulty_rating", dir)
+                    .WhereGreaterThanOrEqualTo("difficulty_rating", lowerDifficulty)
+                    .WhereLessThanOrEqualTo("difficulty_rating", higherDifficulty);
+                        break;
+                }
+                
             }
 
             if (pageNumber== 1)
