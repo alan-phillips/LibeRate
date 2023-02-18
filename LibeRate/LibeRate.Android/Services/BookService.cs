@@ -122,7 +122,7 @@ namespace LibeRate.Droid.Services
                 book.Title = snapshot.Get("title").ToString();
                 book.Author = snapshot.Get("author").ToString();
                 book.ImageURL = snapshot.Get("cover_image").ToString();
-                book.DifficultyRating = (int)snapshot.Get("difficulty_rating");
+                book.DifficultyRating = (float)snapshot.Get("difficulty_rating");
             }
             return book;
         }

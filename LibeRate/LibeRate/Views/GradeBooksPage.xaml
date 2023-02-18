@@ -1,12 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              x:Class="LibeRate.Views.GradeBooksPage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:GradeBooksViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Grade books page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Which book was more difficult?" FontSize="Large"/>
+
+            <CarouselView ItemsSource="{Binding Gradings}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Image Source="{Binding Book1.ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="Start">
+                                            <Label  
+                                                    FontSize="Large"
+                                                    Text="{Binding Book1.Title}"
+                                                    VerticalOptions="Center" />
+                                            <Label
+                                                    FontSize="Medium"
+                                                    Text="{Binding Book1.Author}"
+                                                    VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Image Source="{Binding Book2.ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="Start">
+                                            <Label  
+                                                    FontSize="Large"
+                                                    Text="{Binding Book2.Title}"
+                                                    VerticalOptions="Center" />
+                                            <Label
+                                                    FontSize="Medium"
+                                                    Text="{Binding Book2.Author}"
+                                                    VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
