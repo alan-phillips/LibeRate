@@ -31,9 +31,18 @@ namespace LibeRate.Droid.Services
                 await db.Collection(language + "-books").Document(bookId).Update("user_count", FieldValue.Increment(1));
             }
 
-            library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
-            await library.Document("library-data").Update("books."+bookId, status);
-            UpdateCounts(language);
+            //Don't perform update if selected status is the same
+            if (books[bookId] != status)
+            {
+                library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+                await library.Document("library-data").Update("books." + bookId, status);
+                await UpdateCounts(language);
+                if (status == "Read")
+                {
+                    await CreateGradings(bookId, language);
+                }
+            }
+            
         }
 
         public async Task<List<Book>> GetLibraryBooks(string language, string status)
@@ -96,6 +105,68 @@ namespace LibeRate.Droid.Services
             await library.Document("library-data").Set(libraryData, SetOptions.Merge());
         }
 
+        private async Task CreateGradings(string bookId, string language)
+        {
+            await Task.Delay(2000);
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+
+            var result = await library.Document("library-data").Get().ToAwaitableTask();
+            JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
+            JavaDictionary<string, int> counts = ConvertFirestoreResultToIntDictionary(result);
+
+            if (counts["read_count"] >= 5)
+            {
+                BookService bs = new BookService();
+                Book addedBook = await bs.GetBook(language, bookId);
+                int newGradingCount = 0;
+
+                foreach(var book in books)
+                {
+                    if(book.Value == "Read")
+                    {
+                        Book compareBook = await bs.GetBook(language, book.Key);
+                        var x = addedBook.DifficultyRating - compareBook.DifficultyRating;
+                        if(x >= -5 || x <= 5)
+                        {
+                            await CreateGrading(addedBook.Id, compareBook.Id, language);
+                            newGradingCount++;
+                        }
+                    }
+                }
+
+                if(newGradingCount > 0)
+                {
+                    CollectionReference gradings = db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(language + "-library")
+                    .Document("library-data")
+                    .Collection("gradings");
+
+                    await gradings.Document("grading-data").Update("available_gradings", FieldValue.Increment(newGradingCount));
+                }
+            }
+        }
+
+        private async Task CreateGrading(string book1, string book2, string language)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference gradings = db.Collection("users")
+                .Document(App.CurrentUser.Id)
+                .Collection(language + "-library")
+                .Document("library-data")
+                .Collection("gradings");
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                {"book1", book1 },
+                {"book2", book2 },
+                {"status", "ungraded" }
+            };
+
+            await gradings.Add(data);
+        }
+
         private JavaDictionary<string, string> ConvertFirestoreResultToDictionary(Java.Lang.Object result)
         {
             var snapshot = (DocumentSnapshot)result;
@@ -103,6 +174,19 @@ namespace LibeRate.Droid.Services
             if(snapshot.Exists())
             {
                 dict = snapshot.Get("books").JavaCast<JavaDictionary<string, string>>();
+            }
+            return dict;
+        }
+
+        private JavaDictionary<string, int> ConvertFirestoreResultToIntDictionary(Java.Lang.Object result)
+        {
+            var snapshot = (DocumentSnapshot)result;
+            JavaDictionary<string, int> dict = new JavaDictionary<string, int>();
+            if(snapshot.Exists())
+            {
+                dict.Add("wishlist_count", (int)snapshot.Get("wishlist_count"));
+                dict.Add("owned_count", (int)snapshot.Get("owned_count"));
+                dict.Add("read_count", (int)snapshot.Get("read_count"));
             }
             return dict;
         }

@@ -9,8 +9,8 @@ namespace LibeRate.Models
         public string Id { get; set; }
         public string Username { get; set; }
         public string TargetLanguage { get; set; }
-        public List<Book> Library { get; set; }
         public DateTime AccountCreated { get; set; }
+        public bool CanGradeBooks { get; set; }
 
         public User() { }
         public User(string id)
