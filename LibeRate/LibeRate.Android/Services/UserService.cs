@@ -40,7 +40,7 @@ namespace LibeRate.Droid.Services
 
             var gradingData = await gradings.Document("grading-data").Get().ToAwaitableTask();
             int availableGradings = ConvertFirestoreResultToInt(gradingData);
-            user.CanGradeBooks = (availableGradings >= 5);
+            user.CanGradeBooks = (availableGradings >= 1);
 
             return user;
         }
@@ -98,7 +98,7 @@ namespace LibeRate.Droid.Services
             int resultInt = 0;
             if (snapshot.Exists())
             {
-                resultInt = (int)snapshot.Get("available-gradings");
+                resultInt = (int)snapshot.Get("available_gradings");
             }
             return resultInt;
         }
