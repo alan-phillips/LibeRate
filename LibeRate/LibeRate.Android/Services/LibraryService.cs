@@ -29,10 +29,15 @@ namespace LibeRate.Droid.Services
             if(!books.ContainsKey(bookId))
             {
                 await db.Collection(language + "-books").Document(bookId).Update("user_count", FieldValue.Increment(1));
-            }
-
-            //Don't perform update if selected status is the same
-            if (books[bookId] != status)
+                library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+                await library.Document("library-data").Update("books." + bookId, status);
+                await UpdateCounts(language);
+                if (status == "Read")
+                {
+                    await CreateGradings(bookId, language);
+                }
+            }//Don't perform update if selected status is the same
+            else if (books[bookId] != status)
             {
                 library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
                 await library.Document("library-data").Update("books." + bookId, status);
@@ -65,6 +70,53 @@ namespace LibeRate.Droid.Services
             BookService bs = new BookService();
             List<Book> resultBooks = await bs.GetBooksFromList(language, bookIds);
             return resultBooks;
+        }
+
+        public async Task<List<Grading>> GetGradings(string language)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference cr = db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(language + "-library")
+                    .Document("library-data")
+                    .Collection("gradings");
+
+            var result = await cr.Get().ToAwaitableTask();
+            List<Grading> gradings = await ConvertFirestoreResultToGradingList(result);
+
+            return gradings;
+        }
+
+        public async Task CompleteGrading(string gradingId, string language, string status)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+            CollectionReference cr = db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(language + "-library")
+                    .Document("library-data")
+                    .Collection("gradings");
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                { "status", status }
+            };
+
+            await cr.Document(gradingId).Set(data, SetOptions.Merge());
+
+            DocumentReference dr = db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(language + "-library")
+                    .Document("library-data")
+                    .Collection("gradings")
+                    .Document("grading-data");
+            await dr.Update("available_gradings", FieldValue.Increment(-1));
+            dr = db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(language + "-library")
+                    .Document("library-data")
+                    .Collection("gradings")
+                    .Document("grading-data");
+            await dr.Update("completed_gradings", FieldValue.Increment(1));
         }
 
         private async Task UpdateCounts(string language)
@@ -165,6 +217,36 @@ namespace LibeRate.Droid.Services
             };
 
             await gradings.Add(data);
+        }
+
+        private async Task<List<Grading>> ConvertFirestoreResultToGradingList(Java.Lang.Object result)
+        {
+            var snapshot = (QuerySnapshot)result;
+            List<Grading> gradings = new List<Grading>();
+            BookService bs = new BookService();
+            if (!snapshot.IsEmpty)
+            {
+                var documents = snapshot.Documents;
+                foreach (DocumentSnapshot doc in documents)
+                {
+                    if(doc.Id != "grading-data")
+                    {
+                        if(doc.Get("status").ToString() == "ungraded")
+                        {
+                            string id = doc.Id.ToString();  
+                            string id1 = doc.Get("book1").ToString();
+                            string id2 = doc.Get("book2").ToString();
+
+                            Book book1 = await bs.GetBook(App.CurrentUser.TargetLanguage, id1);
+                            Book book2 = await bs.GetBook(App.CurrentUser.TargetLanguage, id2);
+
+                            Grading g = new Grading(id, book1, book2);
+                            gradings.Add(g);
+                        }
+                    }
+                }
+            }
+            return gradings;
         }
 
         private JavaDictionary<string, string> ConvertFirestoreResultToDictionary(Java.Lang.Object result)
