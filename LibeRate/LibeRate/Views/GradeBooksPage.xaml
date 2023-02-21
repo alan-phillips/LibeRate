@@ -1,12 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LibeRate.Views.GradeBooksPage">
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             x:Class="LibeRate.Views.GradeBooksPage"
+             x:Name="GradeBooks">
+
+    <ContentPage.BindingContext>
+        <viewmodels:GradeBooksViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Grade books page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Which book was more difficult?" FontSize="Large"/>
+
+            <CarouselView ItemsSource="{Binding Gradings}"
+                          IsSwipeEnabled="False"
+                          Position="{Binding Position}"
+                          Loop="False">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Image Source="{Binding Book1.ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="Start">
+                                            <Label  
+                                                    FontSize="Large"
+                                                    Text="{Binding Book1.Title}"
+                                                    VerticalOptions="Center" />
+                                            <Label
+                                                    FontSize="Medium"
+                                                    Text="{Binding Book1.Author}"
+                                                    VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+
+                            <Button Text="^" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book1" />
+                            <Button Text="=" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="equal"/>
+                            <Button Text="v" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book2"/>
+
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Image Source="{Binding Book2.ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="Start">
+                                            <Label  
+                                                    FontSize="Large"
+                                                    Text="{Binding Book2.Title}"
+                                                    VerticalOptions="Center" />
+                                            <Label
+                                                    FontSize="Medium"
+                                                    Text="{Binding Book2.Author}"
+                                                    VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+
+                            <Button Text="Skip" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="skipped"/>
+                            <Button Text="Submit" HorizontalOptions="Center" Command="{Binding BindingContext.SubmitGradingsCommand, Source={x:Reference Name=GradeBooks}}" 
+                                    IsEnabled="{Binding BindingContext.FinalGrading, Source={x:Reference Name=GradeBooks}}" />
+
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

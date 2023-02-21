@@ -17,6 +17,7 @@ namespace LibeRate.ViewModels
         Library OwnedLibrary = new Library("Owned");
         Library WishlistLibrary = new Library("Wishlist");
         ILibraryService libraryService;
+       
         public LibraryViewModel() 
         {
             libraryService = DependencyService.Get<ILibraryService>();

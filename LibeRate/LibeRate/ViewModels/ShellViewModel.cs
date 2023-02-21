@@ -11,7 +11,7 @@ namespace LibeRate.ViewModels
 
         public ShellViewModel() 
         {
-            CanGradeBooks = true;        
+            CanGradeBooks = App.CurrentUser.CanGradeBooks;        
         }
     }
 }

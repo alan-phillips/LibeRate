@@ -10,7 +10,7 @@ namespace LibeRate.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int difficulty = (int)value;
+            float difficulty = (float)value;
             Color result;
 
             if(difficulty < 11)

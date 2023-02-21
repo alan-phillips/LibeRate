@@ -12,8 +12,11 @@ namespace LibeRate.ViewModels
 {
     public class SearchViewModel : BaseViewModel
     {
+        public IAsyncCommand OpenRequestFormCommand { get; }
+
         public SearchViewModel()
         {
+            OpenRequestFormCommand= new AsyncCommand(OpenRequestForm);  
         }
 
         public ICommand PerformSearchCommand => new AsyncCommand<string>(async (string query) =>
@@ -21,5 +24,10 @@ namespace LibeRate.ViewModels
             var route = $"///{nameof(BooksPage)}?query={query}";
             await Shell.Current.GoToAsync(route);
         });
+
+        private async Task OpenRequestForm()
+        {
+            await Shell.Current.GoToAsync($"{nameof(BookRequestPage)}");
+        }
     }
 }

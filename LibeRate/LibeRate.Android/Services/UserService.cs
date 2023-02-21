@@ -19,6 +19,7 @@ using Java.Interop;
 using Android.Gms.Tasks;
 using Task = System.Threading.Tasks.Task;
 using AndroidX.Core.Util;
+using IntelliJ.Lang.Annotations;
 
 namespace LibeRate.Droid.Services
 {
@@ -30,6 +31,17 @@ namespace LibeRate.Droid.Services
 
             var result = await db.Collection("users").Document(userId).Get().ToAwaitableTask();
             User user = ConvertFirestoreResultToUser(result);
+
+            CollectionReference gradings = db.Collection("users")
+            .Document(user.Id)
+                .Collection(user.TargetLanguage + "-library")
+                .Document("library-data")
+                .Collection("gradings");
+
+            var gradingData = await gradings.Document("grading-data").Get().ToAwaitableTask();
+            int availableGradings = ConvertFirestoreResultToInt(gradingData);
+            user.CanGradeBooks = (availableGradings >= 1);
+
             return user;
         }
 
@@ -48,6 +60,16 @@ namespace LibeRate.Droid.Services
         public async Task SetTargetLanguage(string languageid)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
+            var result = await db.Collection("users")
+                .Document(App.CurrentUser.Id)
+                .Collection(languageid+"-library")
+                .Document("library-data")
+                .Get().ToAwaitableTask();
+            var snapshot = (DocumentSnapshot) result;
+            if (!snapshot.Exists()) 
+            { 
+                //create library and grading metadata
+            }
             JavaDictionary<string, object> data = new JavaDictionary<string, object>
             {
                 { "target_language", languageid }
@@ -68,6 +90,17 @@ namespace LibeRate.Droid.Services
             }
 
             return user;
+        }
+
+        private int ConvertFirestoreResultToInt(Java.Lang.Object result)
+        {
+            var snapshot = (DocumentSnapshot)result;
+            int resultInt = 0;
+            if (snapshot.Exists())
+            {
+                resultInt = (int)snapshot.Get("available_gradings");
+            }
+            return resultInt;
         }
     }
 }
