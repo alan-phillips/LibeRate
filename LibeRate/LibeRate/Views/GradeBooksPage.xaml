@@ -20,6 +20,7 @@
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
+                            <Button Text="&lt;" HorizontalOptions="Start" Command="{Binding BindingContext.PreviousGradingCommand, Source={x:Reference Name=GradeBooks}}"/> 
                             <Grid Padding="5">
                                 <Frame CornerRadius="10" HasShadow="True">
                                     <StackLayout Orientation="Horizontal" Spacing="5">

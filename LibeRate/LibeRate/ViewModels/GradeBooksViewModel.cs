@@ -20,19 +20,33 @@ namespace LibeRate.ViewModels
         public ObservableCollection<Grading> Gradings { get; set; }
 
         public Command<string> CompleteGradingCommand { get; }
+        public ICommand PreviousGradingCommand { get; }
         public IAsyncCommand SubmitGradingsCommand { get; }
 
         public GradeBooksViewModel() 
         { 
             libraryService = DependencyService.Get<ILibraryService>();
             Position= 0;
+            FirstGrading = true;
             FinalGrading = false;
 
             CompleteGradingCommand = new Command<string>(result => CompleteGrading(result));
+            PreviousGradingCommand = new Command(PreviousGrading);
             SubmitGradingsCommand = new AsyncCommand(SubmitGradings);
 
             Gradings= new ObservableCollection<Grading>();
             Task.Run(async () => await LoadGradings());
+        }
+
+        private bool firstGrading;
+        public bool FirstGrading
+        {
+            get { return finalGrading; }
+            set
+            {
+                firstGrading = value;
+                OnPropertyChanged(nameof(FirstGrading));
+            }
         }
 
         private bool finalGrading;
@@ -68,12 +82,22 @@ namespace LibeRate.ViewModels
             Gradings[Position].Result= result;
             if(Position < Gradings.Count-1)
             {
+                FirstGrading = false;
                 Position++;
             } else
             {
                 FinalGrading=true;
             }
             
+        }
+
+        private void PreviousGrading()
+        {
+            if(Position > 0)
+            {
+                Position--;
+                if(Position == 0) { FirstGrading = true; }
+            }
         }
 
         private async Task SubmitGradings()

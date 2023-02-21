@@ -7,6 +7,7 @@ using LibeRate.Views;
 using System;
 using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,15 +32,28 @@ namespace LibeRate
 
         protected override void OnStart()
         {
-            
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
         protected override void OnSleep()
         {
+            Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
         }
 
         protected override void OnResume()
         {
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+
+        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if(e.NetworkAccess != NetworkAccess.Internet)
+            {
+                Shell.Current.GoToAsync($"{nameof(InternetDisconnectedPage)}");
+            } else
+            {
+                Shell.Current.GoToAsync("..");
+            }
         }
     }
 }
