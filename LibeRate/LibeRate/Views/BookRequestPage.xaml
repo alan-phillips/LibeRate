@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             x:Class="LibeRate.Views.BookRequestPage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:BookRequestViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Entry Text="{Binding BookUrl}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"
+                   Placeholder="Amazon URL" />
+
+            <Picker Title="Estimated Difficulty"
+                    x:Name="pick"
+                    ItemsSource="{Binding Difficulties}"
+                    SelectedItem="{Binding SelectedDifficulty}"/>
+
+            <Button VerticalOptions="Center" 
+                    Text="Submit" 
+                    Command="{Binding SubmitFormCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -122,7 +122,7 @@ namespace LibeRate.Droid.Services
                 book.Title = snapshot.Get("title").ToString();
                 book.Author = snapshot.Get("author").ToString();
                 book.ImageURL = snapshot.Get("cover_image").ToString();
-                book.DifficultyRating = (int)snapshot.Get("difficulty_rating");
+                book.DifficultyRating = (float)snapshot.Get("difficulty_rating");
             }
             return book;
         }
@@ -172,6 +172,31 @@ namespace LibeRate.Droid.Services
         public void ResetService()
         {
             pageBottoms.Clear();
+        }
+
+        public async System.Threading.Tasks.Task SetDifficultyRating(string languageID, string bookID, float difficulty)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                { "difficulty_rating", difficulty }
+            };
+            await db.Collection(languageID + "-books").Document(bookID).Set(data, SetOptions.Merge());
+        }
+
+        public async System.Threading.Tasks.Task CreateBookRequest(string languageID, Dictionary<string, object> requestData)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                { "amazon_url", requestData["amazon_url"] },
+                { "estimated_difficulty", requestData["estimated_difficulty"] },
+                { "request_user", requestData["request_user"] }
+            };
+
+            await db.Collection(languageID + "-book-requests").Add(data);
         }
     }
 }

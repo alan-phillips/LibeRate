@@ -140,7 +140,7 @@ namespace LibeRate.ViewModels
 
         private async Task ViewDetail(Book book)
         {
-            var route = $"{nameof(BookPage)}?BookId={book.Id}&Title={book.Title}&Author={book.Author}&Img={book.ImageURL}&Diff={book.DifficultyRating}";
+            var route = $"{nameof(BookPage)}?BookId={book.Id}";
             await Shell.Current.GoToAsync(route);
         }
 

@@ -10,5 +10,7 @@ namespace LibeRate.Services
     {
         Task AddBookToLibrary(string bookId, string language, string status);
         Task<List<Book>> GetLibraryBooks(string language, string status);
+        Task<List<Grading>> GetGradings(string language);
+        Task CompleteGrading(string gradingId, string language, string status);
     }
 }
