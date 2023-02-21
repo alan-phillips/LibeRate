@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,17 +23,23 @@ namespace LibeRate.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            IFirebaseAuthentication auth;
-            auth = DependencyService.Get<IFirebaseAuthentication>();
-            if (auth != null)
+            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                if(auth.IsSignedIn())
+                await Shell.Current.GoToAsync($"{nameof(InternetDisconnectedPage)}");
+            } else
+            {
+                IFirebaseAuthentication auth;
+                auth = DependencyService.Get<IFirebaseAuthentication>();
+                if (auth != null)
                 {
-                    IUserService userService = DependencyService.Get<IUserService>();
-                    App.CurrentUser = await userService.GetUser(auth.GetUserID());
-                    await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
-                }
+                    if (auth.IsSignedIn())
+                    {
+                        IUserService userService = DependencyService.Get<IUserService>();
+                        App.CurrentUser = await userService.GetUser(auth.GetUserID());
+                        await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
+                    }
 
+                }
             }
         }
 
