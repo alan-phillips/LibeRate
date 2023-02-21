@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using LibeRate.Models;
 using LibeRate.Services;
+using LibeRate.Helpers;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
+using System.Security.Cryptography;
+using LibeRate.Views;
 
 namespace LibeRate.ViewModels
 {
@@ -16,16 +19,31 @@ namespace LibeRate.ViewModels
         ILibraryService libraryService;
         public ObservableCollection<Grading> Gradings { get; set; }
 
-        public IAsyncCommand<string> CompleteGradingCommand { get; }
+        public Command<string> CompleteGradingCommand { get; }
+        public IAsyncCommand SubmitGradingsCommand { get; }
 
         public GradeBooksViewModel() 
         { 
             libraryService = DependencyService.Get<ILibraryService>();
             Position= 0;
+            FinalGrading = false;
 
-            CompleteGradingCommand = new AsyncCommand<string>(result => CompleteGrading(result));
+            CompleteGradingCommand = new Command<string>(result => CompleteGrading(result));
+            SubmitGradingsCommand = new AsyncCommand(SubmitGradings);
+
             Gradings= new ObservableCollection<Grading>();
             Task.Run(async () => await LoadGradings());
+        }
+
+        private bool finalGrading;
+        public bool FinalGrading
+        {
+            get { return finalGrading; }
+            set
+            {
+                finalGrading = value;
+                OnPropertyChanged(nameof(FinalGrading));
+            }
         }
 
         private int position;
@@ -45,24 +63,40 @@ namespace LibeRate.ViewModels
             }
         }
 
-        private async Task CompleteGrading(string result)
+        private void CompleteGrading(string result)
         {
-            switch(result)
-            {
-                case ("Book1"):
-                    break;
-                case ("Book2"):
-                    break;
-                case ("Equal"):
-                    break;
-                case ("Skipped"):
-                    break;
-            }
+            Gradings[Position].Result= result;
             if(Position < Gradings.Count-1)
             {
                 Position++;
+            } else
+            {
+                FinalGrading=true;
             }
             
+        }
+
+        private async Task SubmitGradings()
+        {
+            IBookService bs = DependencyService.Get<IBookService>();
+            foreach (Grading grading in Gradings)
+            {
+                if(grading.Result != "skipped")
+                {
+                    float rating1 = grading.Book1.DifficultyRating;
+                    float rating2 = grading.Book2.DifficultyRating;
+
+                    float[] newRatings = EloCalculator.CalculateElo(rating1, rating2, grading.Result);
+
+                    await bs.SetDifficultyRating(App.CurrentUser.TargetLanguage, grading.Book1.Id, newRatings[0]);
+                    await bs.SetDifficultyRating(App.CurrentUser.TargetLanguage, grading.Book2.Id, newRatings[1]);
+                }
+
+                await libraryService.CompleteGrading(grading.Id, App.CurrentUser.TargetLanguage, grading.Result);
+                
+            }
+            App.CurrentUser.CanGradeBooks = false;
+            await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
         }
     }
 }

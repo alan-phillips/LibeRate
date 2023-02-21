@@ -6,9 +6,10 @@ namespace LibeRate.Models
 {
     public class Grading
     {
-        string Id { get; set; }
+        public string Id { get; set; }
         public Book Book1 { get; set; }
         public Book Book2 { get; set; }
+        public string Result { get; set; }
 
         public Grading() { }
 

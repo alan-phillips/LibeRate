@@ -38,9 +38,9 @@
                                 </Frame>
                             </Grid>
 
-                            <Button Text="^" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="Book1" />
-                            <Button Text="=" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="Equal"/>
-                            <Button Text="v" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="Book2"/>
+                            <Button Text="^" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book1" />
+                            <Button Text="=" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="equal"/>
+                            <Button Text="v" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book2"/>
 
                             <Grid Padding="5">
                                 <Frame CornerRadius="10" HasShadow="True">
@@ -60,7 +60,9 @@
                                 </Frame>
                             </Grid>
 
-                            <Button Text="Skip" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="Skipped"/>
+                            <Button Text="Skip" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="skipped"/>
+                            <Button Text="Submit" HorizontalOptions="Center" Command="{Binding BindingContext.SubmitGradingsCommand, Source={x:Reference Name=GradeBooks}}" 
+                                    IsEnabled="{Binding BindingContext.FinalGrading, Source={x:Reference Name=GradeBooks}}" />
 
                         </StackLayout>
 
