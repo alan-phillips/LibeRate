@@ -173,5 +173,30 @@ namespace LibeRate.Droid.Services
         {
             pageBottoms.Clear();
         }
+
+        public async System.Threading.Tasks.Task SetDifficultyRating(string languageID, string bookID, float difficulty)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                { "difficulty_rating", difficulty }
+            };
+            await db.Collection(languageID + "-books").Document(bookID).Set(data, SetOptions.Merge());
+        }
+
+        public async System.Threading.Tasks.Task CreateBookRequest(string languageID, Dictionary<string, object> requestData)
+        {
+            FirebaseFirestore db = FirebaseFirestore.Instance;
+
+            JavaDictionary<string, object> data = new JavaDictionary<string, object>
+            {
+                { "amazon_url", requestData["amazon_url"] },
+                { "estimated_difficulty", requestData["estimated_difficulty"] },
+                { "request_user", requestData["request_user"] }
+            };
+
+            await db.Collection(languageID + "-book-requests").Add(data);
+        }
     }
 }

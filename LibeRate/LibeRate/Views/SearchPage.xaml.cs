@@ -18,7 +18,7 @@ namespace LibeRate.Views
 			InitializeComponent();
 		}
 
-		protected override async void OnAppearing()
+		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 			Shell.Current.BindingContext = new ShellViewModel();
