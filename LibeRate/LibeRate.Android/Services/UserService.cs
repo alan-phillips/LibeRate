@@ -66,10 +66,42 @@ namespace LibeRate.Droid.Services
                 .Document("library-data")
                 .Get().ToAwaitableTask();
             var snapshot = (DocumentSnapshot) result;
+            
             if (!snapshot.Exists()) 
-            { 
-                //create library and grading metadata
+            {
+                //create library and grading metadata if doesn't exist
+                JavaDictionary<string, object> libData = new JavaDictionary<string, object>
+                {
+                    { "owned_count", 0 },
+                    { "read_count", 0 },
+                    { "wishlist_count", 0 }
+                };
+                JavaDictionary<string, object> lib = new JavaDictionary<string, object>
+                {
+                    { "", "" }
+                };
+                
+                libData.Add("books", lib);
+                await db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(languageid + "-library")
+                    .Document("library-data")
+                    .Set(libData);
+
+                JavaDictionary<string, object> grad = new JavaDictionary<string, object>
+                {
+                    { "available_gradings", 0 },
+                    { "completed_gradings", 0 }
+                };
+                await db.Collection("users")
+                    .Document(App.CurrentUser.Id)
+                    .Collection(languageid + "-library")
+                    .Document("library-data")
+                    .Collection("gradings")
+                    .Document("grading-data")
+                    .Set(grad);
             }
+
             JavaDictionary<string, object> data = new JavaDictionary<string, object>
             {
                 { "target_language", languageid }
