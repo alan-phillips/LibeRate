@@ -106,11 +106,38 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Difficulty Range:.
+        /// </summary>
+        public static string DifficultyRangeLabel {
+            get {
+                return ResourceManager.GetString("DifficultyRangeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string EmailEntryPlaceholder {
             get {
                 return ResourceManager.GetString("EmailEntryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which book was more difficult?.
+        /// </summary>
+        public static string GradeBooksLabel {
+            get {
+                return ResourceManager.GetString("GradeBooksLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items Per Page:.
+        /// </summary>
+        public static string ItemsPerPageLabel {
+            get {
+                return ResourceManager.GetString("ItemsPerPageLabel", resourceCulture);
             }
         }
         
@@ -196,6 +223,24 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t find what you&apos;re looking for?.
+        /// </summary>
+        public static string SearchPageLabel {
+            get {
+                return ResourceManager.GetString("SearchPageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request a book.
+        /// </summary>
+        public static string SearchPageLabel2 {
+            get {
+                return ResourceManager.GetString("SearchPageLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SearchTitle {
@@ -219,6 +264,24 @@ namespace LibeRate.Resx {
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By:.
+        /// </summary>
+        public static string SortByLabel {
+            get {
+                return ResourceManager.GetString("SortByLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string SubmitButton {
+            get {
+                return ResourceManager.GetString("SubmitButton", resourceCulture);
             }
         }
         

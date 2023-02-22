@@ -174,4 +174,25 @@
   <data name="ChangeDisplayLanguageSetting" xml:space="preserve">
     <value>Change Display Language</value>
   </data>
+  <data name="GradeBooksLabel" xml:space="preserve">
+    <value>Which book was more difficult?</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="SearchPageLabel" xml:space="preserve">
+    <value>Can't find what you're looking for?</value>
+  </data>
+  <data name="SearchPageLabel2" xml:space="preserve">
+    <value>Request a book</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>Sort By:</value>
+  </data>
+  <data name="ItemsPerPageLabel" xml:space="preserve">
+    <value>Items Per Page:</value>
+  </data>
+  <data name="DifficultyRangeLabel" xml:space="preserve">
+    <value>Difficulty Range:</value>
+  </data>
 </root>

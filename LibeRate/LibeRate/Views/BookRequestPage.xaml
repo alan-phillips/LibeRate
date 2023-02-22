@@ -22,7 +22,7 @@
                     SelectedItem="{Binding SelectedDifficulty}"/>
 
             <Button VerticalOptions="Center" 
-                    Text="Submit" 
+                    Text="{xct:Translate SubmitButton}" 
                     Command="{Binding SubmitFormCommand}"/>
         </StackLayout>
     </ContentPage.Content>

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
              x:Class="LibeRate.Views.GradeBooksPage"
              x:Name="GradeBooks">
@@ -11,7 +12,7 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Which book was more difficult?" FontSize="Large"/>
+            <Label Text="{xct:Translate GradeBooksLabel}" FontSize="Large"/>
 
             <CarouselView ItemsSource="{Binding Gradings}"
                           IsSwipeEnabled="False"
@@ -65,7 +66,7 @@
                             </Grid>
 
                             <Button Text="Skip" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="skipped"/>
-                            <Button Text="Submit" HorizontalOptions="Center" Command="{Binding BindingContext.SubmitGradingsCommand, Source={x:Reference Name=GradeBooks}}" 
+                            <Button Text="{xct:Translate SubmitButton}" HorizontalOptions="Center" Command="{Binding BindingContext.SubmitGradingsCommand, Source={x:Reference Name=GradeBooks}}" 
                                     IsEnabled="{Binding BindingContext.FinalGrading, Source={x:Reference Name=GradeBooks}}" />
 
                         </StackLayout>

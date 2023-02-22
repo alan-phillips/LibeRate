@@ -2,6 +2,7 @@
 <xct:Popup xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:xctt="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.Popups.BrowserFiltersPopup"
            xmlns:viewmodels="clr-namespace:LibeRate.ViewModels.Popups"
            Size="250,500"
@@ -33,25 +34,32 @@
     </xct:Popup.Resources>
 
     <StackLayout Style="{StaticResource PopupLayout}">
-
-        <Picker Title="Sort by"
+        
+        <StackLayout>
+            <Label Text="{xctt:Translate SortByLabel}"/>
+            <Picker Title="Sort by"
                 ItemsSource="{Binding Filters}"
                 SelectedItem="{Binding SelectedFilter}"/>
-        
-        <Picker Title="Items Per Page" 
+
+            <Label Text="{xctt:Translate ItemsPerPageLabel}"/>
+            <Picker Title="Items Per Page" 
                 ItemsSource="{Binding ItemsPerPage}"
                 SelectedItem="{Binding SelectedItemsPerPage}"/>
-        
-        <xct:RangeSlider x:Name="Difficulty"
+
+            <Label Text="{xctt:Translate DifficultyRangeLabel}"/>
+            <xct:RangeSlider x:Name="Difficulty"
                          MinimumValue="0"
                          MaximumValue="50"
                          StepValue="1"
                          LowerValue="{Binding LowerDifficulty}"
                          UpperValue="{Binding HigherDifficulty}" />
+        </StackLayout>
 
-        <Button Text="Submit"
+        <StackLayout VerticalOptions="EndAndExpand">
+            <Button Text="{xctt:Translate ConfirmButton}"
                 Command="{Binding SubmitFormCommand}"
                 Clicked="Button_OnClicked"/>
+        </StackLayout>
 
     </StackLayout>
 </xct:Popup>
