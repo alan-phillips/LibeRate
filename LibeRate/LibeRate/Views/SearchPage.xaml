@@ -22,10 +22,10 @@
 
                 </SearchBar>
             </StackLayout>
-            
 
-            <Label Text="Can't find what you're looking for?" FontSize="Small" HorizontalOptions="Center" VerticalOptions="End"/>
-            <Label Text="Request a book" FontSize="Small" HorizontalOptions="Center" VerticalOptions="End" TextColor="Blue">
+
+            <Label Text="{xct:Translate SearchPageLabel}" FontSize="Small" HorizontalOptions="Center" VerticalOptions="End"/>
+            <Label Text="{xct:Translate SearchPageLabel2}" FontSize="Small" HorizontalOptions="Center" VerticalOptions="End" TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding OpenRequestFormCommand}"/>
                 </Label.GestureRecognizers>

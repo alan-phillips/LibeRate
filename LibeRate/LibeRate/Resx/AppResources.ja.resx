@@ -174,4 +174,25 @@
   <data name="ChangeDisplayLanguageSetting" xml:space="preserve">
     <value>表示言語を変更</value>
   </data>
+  <data name="GradeBooksLabel" xml:space="preserve">
+    <value>最も難しい本をお選びください</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="SearchPageLabel" xml:space="preserve">
+    <value>お探しの本が見つからない場合：</value>
+  </data>
+  <data name="SearchPageLabel2" xml:space="preserve">
+    <value>本の追加をリクエスト</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>並べ替え</value>
+  </data>
+  <data name="ItemsPerPageLabel" xml:space="preserve">
+    <value>アイテム数</value>
+  </data>
+  <data name="DifficultyRangeLabel" xml:space="preserve">
+    <value>難易度</value>
+  </data>
 </root>
