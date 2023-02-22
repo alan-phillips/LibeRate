@@ -39,9 +39,12 @@
                                 </Frame>
                             </Grid>
 
-                            <Button Text="^" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book1" />
-                            <Button Text="=" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="equal"/>
-                            <Button Text="v" HorizontalOptions="Center" Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book2"/>
+                            <ImageButton Source="arrow_upward.png" HorizontalOptions="Center" BackgroundColor="Transparent"
+                                         Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book1" />
+                            <ImageButton Source="equal.png" HorizontalOptions="Center" BackgroundColor="Transparent"
+                                         Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="equal"/>
+                            <ImageButton Source="arrow_downward.png" HorizontalOptions="Center" BackgroundColor="Transparent"
+                                         Command="{Binding BindingContext.CompleteGradingCommand, Source={x:Reference Name=GradeBooks}}" CommandParameter="book2"/>
 
                             <Grid Padding="5">
                                 <Frame CornerRadius="10" HasShadow="True">
