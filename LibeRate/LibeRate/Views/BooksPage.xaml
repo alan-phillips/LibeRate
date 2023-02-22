@@ -22,7 +22,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Filter"
+        <ToolbarItem IconImageSource="filter_list.png"
                      Command="{Binding OpenFiltersMenuCommand}"/>
     </ContentPage.ToolbarItems>
     

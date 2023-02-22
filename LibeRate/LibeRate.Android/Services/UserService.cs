@@ -78,7 +78,7 @@ namespace LibeRate.Droid.Services
                 };
                 JavaDictionary<string, object> lib = new JavaDictionary<string, object>
                 {
-                    { "", "" }
+                    { "base", "null" }
                 };
                 
                 libData.Add("books", lib);

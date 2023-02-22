@@ -61,7 +61,7 @@ namespace LibeRate.Droid.Services
             List<string> bookIds= new List<string>();
             foreach(var book in books)
             {
-                if(book.Value == status && book.Key != "")
+                if(book.Value == status)
                 {
                     bookIds.Add(book.Key);
                 }

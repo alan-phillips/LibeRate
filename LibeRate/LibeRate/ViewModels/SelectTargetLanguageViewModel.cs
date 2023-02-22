@@ -20,8 +20,8 @@ namespace LibeRate.ViewModels
         {
             Languages = new ObservableCollection<LanguageMenuItem>
             {
-                new LanguageMenuItem("english", "English", ""),
-                new LanguageMenuItem("japanese", "Japanese", "")
+                new LanguageMenuItem("english", "English", "united_kingdom.png"),
+                new LanguageMenuItem("japanese", "Japanese", "japan.png")
             };
 
             ConfirmSelectionCommand = new Command(ConfirmSelection);

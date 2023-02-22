@@ -94,15 +94,15 @@
         <ShellContent ContentTemplate="{DataTemplate local:SelectTargetLanguagePage}" />
     </ShellItem>
     
-    <FlyoutItem Title="{xct:Translate SearchTitle}" Icon="icon_about.png">
+    <FlyoutItem Title="{xct:Translate SearchTitle}" Icon="search.png">
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{xct:Translate BrowseTitle}">
+    <FlyoutItem Title="{xct:Translate BrowseTitle}" Icon="explore.png">
         <ShellContent Route="BooksPage" ContentTemplate="{DataTemplate local:BooksPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{xct:Translate ProfileTitle}">
+    <FlyoutItem Title="{xct:Translate ProfileTitle}" Icon="person.png">
         <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
     </FlyoutItem>
 
@@ -110,13 +110,13 @@
         <ShellContent Route="GradeBooksPage" ContentTemplate="{DataTemplate local:GradeBooksPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{xct:Translate SettingsTitle}">
+    <FlyoutItem Title="{xct:Translate SettingsTitle}" Icon="settings.png">
         <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate local:SettingsPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="{xct:Translate LogoutTitle}" 
-              StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
+              StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked" IconImageSource="logout.png">
     </MenuItem>
 
     <!--
