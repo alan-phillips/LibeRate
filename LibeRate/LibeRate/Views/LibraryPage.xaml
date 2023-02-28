@@ -6,6 +6,7 @@
             xmlns:converters="clr-namespace:LibeRate.Helpers"
             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="LibeRate.Views.LibraryPage"
+            x:Name="LibraryP"
             ItemsSource="{Binding Libraries}">
 
     <TabbedPage.BindingContext>
@@ -34,7 +35,7 @@
                         <ListView.Behaviors>
                             <xct:EventToCommandBehavior
                                 EventName="ItemTapped"
-                                Command="{Binding ViewDetailCommand}"                
+                                Command="{Binding BindingContext.ViewDetailCommand, Source={x:Reference Name=LibraryP}}"                
                                 EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
                         </ListView.Behaviors>
 
@@ -63,7 +64,7 @@
                                                HorizontalOptions="EndAndExpand" VerticalOptions="Start" 
                                                Margin="0" Padding="0" 
                                                BackgroundColor="{Binding DifficultyRating, Converter={StaticResource colourConvert}}">
-                                                    <Label Text="{Binding DifficultyRating}" 
+                                                    <Label Text="{Binding DifficultyRating, StringFormat='{0:N0}'}" 
                                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                                                 </Frame>
 

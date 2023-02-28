@@ -10,17 +10,19 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <Label Text="{Binding Profile.Username}"
-                   FontSize="Large"
+                   FontSize="Title"
                 VerticalOptions="Start" 
-                HorizontalOptions="StartAndExpand" />
-            <Label Text="{Binding Profile.TargetLanguage}"
+                HorizontalOptions="Start" />
+            <Label Text="{Binding Profile.TargetLanguage, StringFormat='Target Language: {0}'}"
+                   FontSize="Body"
                    VerticalOptions="Start"
-                   HorizontalOptions="StartAndExpand"/>
-            <Label Text="{Binding Profile.AccountCreated}"
+                   HorizontalOptions="Start"/>
+            <Label Text="{Binding Profile.AccountCreated, StringFormat='Date Joined: {0:d}'}"
+                   FontSize="Body"
                    VerticalOptions="Start"
-                   HorizontalOptions="StartAndExpand"/>
+                   HorizontalOptions="Start"/>
 
             <Button Text="View Library"
                     VerticalOptions="EndAndExpand"

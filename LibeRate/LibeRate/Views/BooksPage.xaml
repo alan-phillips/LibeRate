@@ -67,7 +67,7 @@
                                                HorizontalOptions="EndAndExpand" VerticalOptions="Start" 
                                                Margin="0" Padding="0" 
                                                BackgroundColor="{Binding DifficultyRating, Converter={StaticResource colourConvert}}">
-                                            <Label Text="{Binding DifficultyRating}" 
+                                            <Label Text="{Binding DifficultyRating, StringFormat='{0:N0}'}" 
                                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                                         </Frame>
 

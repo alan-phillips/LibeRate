@@ -4,6 +4,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:model="clr-namespace:LibeRate.Models"
              xmlns:viewmodels="clr-namespace:LibeRate.ViewModels"
+             xmlns:converters="clr-namespace:LibeRate.Helpers"
              x:Class="LibeRate.Views.BookPage"
              x:DataType="viewmodels:BookViewModel"
              xmlns:resources="clr-namespace:LibeRate.Resx">
@@ -12,11 +13,31 @@
         <viewmodels:BookViewModel/>
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <converters:DifficultyColourConverter x:Key="colourConvert"/>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Image Source="{Binding DisplayBook.ImageURL}" />
-            <Button Text="{xct:Translate AddToLibraryButton}" 
+        <StackLayout Padding="10">
+            <StackLayout>
+                <Image Source="{Binding DisplayBook.ImageURL}" WidthRequest="150" HeightRequest="200"/>
+                <Frame MinimumWidthRequest="30" WidthRequest="70" 
+                                               HeightRequest="30" CornerRadius="15" 
+                                               HorizontalOptions="Start" VerticalOptions="Start" 
+                                               Margin="0" Padding="0" 
+                                               BackgroundColor="{Binding DisplayBook.DifficultyRating, Converter={StaticResource colourConvert}}">
+                    <Label Text="{Binding DisplayBook.DifficultyRating, StringFormat='Level {0:N0}'}" 
+                                                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Frame>
+                <Label Text="{Binding DisplayBook.Title}" FontSize="Title" />
+                <Label Text="{Binding DisplayBook.Author, StringFormat='By: {0}'}" FontSize="Subtitle" />
+                <Label Text="{Binding DisplayBook.UserCount, StringFormat='Active Users: {0}'}" FontSize="Body" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                <Button Text="{xct:Translate AddToLibraryButton}" 
                     Command="{Binding AddToLibraryCommand}"/>
+            </StackLayout>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

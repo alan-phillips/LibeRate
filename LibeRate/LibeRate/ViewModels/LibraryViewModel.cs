@@ -1,11 +1,13 @@
 ﻿using LibeRate.Models;
 using LibeRate.Services;
+using LibeRate.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace LibeRate.ViewModels
@@ -16,6 +18,7 @@ namespace LibeRate.ViewModels
         Library ReadLibrary = new Library("Read");
         Library OwnedLibrary = new Library("Owned");
         Library WishlistLibrary = new Library("Wishlist");
+        public IAsyncCommand<Book> ViewDetailCommand { get; }
         ILibraryService libraryService;
        
         public LibraryViewModel() 
@@ -27,6 +30,7 @@ namespace LibeRate.ViewModels
                 OwnedLibrary,
                 WishlistLibrary
             };
+            ViewDetailCommand = new AsyncCommand<Book>(book => ViewDetail(book));
 
             Task.Run(async () => await LoadBooks());
         }
@@ -53,6 +57,12 @@ namespace LibeRate.ViewModels
             {
                 WishlistLibrary.Add(book);
             }
+        }
+
+        private async Task ViewDetail(Book book)
+        {
+            var route = $"{nameof(BookPage)}?BookId={book.Id}";
+            await Shell.Current.GoToAsync(route);
         }
     }
 }
