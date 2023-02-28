@@ -167,7 +167,7 @@ namespace LibeRate.Droid.Services
             JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
             JavaDictionary<string, int> counts = ConvertFirestoreResultToIntDictionary(result);
 
-            if (counts["read_count"] >= 5)
+            if (counts["read_count"] >= 2)
             {
                 BookService bs = new BookService();
                 Book addedBook = await bs.GetBook(language, bookId);
@@ -175,7 +175,7 @@ namespace LibeRate.Droid.Services
 
                 foreach(var book in books)
                 {
-                    if(book.Value == "Read")
+                    if(book.Value == "Read" && book.Key != addedBook.Id)
                     {
                         Book compareBook = await bs.GetBook(language, book.Key);
                         var x = addedBook.DifficultyRating - compareBook.DifficultyRating;
@@ -196,6 +196,7 @@ namespace LibeRate.Droid.Services
                     .Collection("gradings");
 
                     await gradings.Document("grading-data").Update("available_gradings", FieldValue.Increment(newGradingCount));
+                    App.CurrentUser.CanGradeBooks= true;
                 }
             }
         }

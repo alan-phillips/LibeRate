@@ -119,6 +119,7 @@ namespace LibeRate.Droid.Services
                 user.Id = snapshot.Id;
                 user.Username = snapshot.Get("username").ToString();
                 user.TargetLanguage = snapshot.Get("target_language").ToString();
+                user.AccountCreated = DateTime.Parse(snapshot.Get("date_created").ToString());
             }
 
             return user;

@@ -43,6 +43,8 @@ namespace LibeRate.Droid.Services
 
             int itemsPerPage = (int)filterSettings["items_per_page"];
             string searchQuery = (string)filterSettings["search_query"];
+            searchQuery = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.
+                ToTitleCase(searchQuery.ToLower());
             string filter = (string)filterSettings["filter"];
             int lowerDifficulty = (int)filterSettings["lower_difficulty"];
             int higherDifficulty = (int)filterSettings["higher_difficulty"];
@@ -140,7 +142,8 @@ namespace LibeRate.Droid.Services
                         doc.Get("title").ToString(), 
                         doc.Get("author").ToString(), 
                         doc.Get("cover_image").ToString(), 
-                        (int)doc.Get("difficulty_rating"));
+                        (float)doc.Get("difficulty_rating"),
+                        (int)doc.Get("user_count"));
                     books.Add(b);
                 }
                 if(!pageBottoms.Contains(documents.Last())) 
