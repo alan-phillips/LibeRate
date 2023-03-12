@@ -179,7 +179,7 @@ namespace LibeRate.Droid.Services
                     {
                         Book compareBook = await bs.GetBook(language, book.Key);
                         var x = addedBook.DifficultyRating - compareBook.DifficultyRating;
-                        if(x >= -5 || x <= 5)
+                        if(x >= -5 && x <= 5)
                         {
                             await CreateGrading(userId, addedBook.Id, compareBook.Id, language);
                             newGradingCount++;
