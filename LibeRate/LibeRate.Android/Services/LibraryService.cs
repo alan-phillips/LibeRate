@@ -18,10 +18,10 @@ namespace LibeRate.Droid.Services
 {
     public class LibraryService : ILibraryService
     {
-        public async Task AddBookToLibrary(string bookId, string language, string status)
+        public async Task AddBookToLibrary(string userId, string bookId, string language, string status)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language+"-library");
+            CollectionReference library = db.Collection("users").Document(userId).Collection(language+"-library");
 
             var result = await library.Document("library-data").Get().ToAwaitableTask();
             JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
@@ -29,31 +29,31 @@ namespace LibeRate.Droid.Services
             if(!books.ContainsKey(bookId))
             {
                 await db.Collection(language + "-books").Document(bookId).Update("user_count", FieldValue.Increment(1));
-                library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+                library = db.Collection("users").Document(userId).Collection(language + "-library");
                 await library.Document("library-data").Update("books." + bookId, status);
-                await UpdateCounts(language);
+                await UpdateCounts(userId, language);
                 if (status == "Read")
                 {
-                    await CreateGradings(bookId, language);
+                    await CreateGradings(userId, bookId, language);
                 }
             }//Don't perform update if selected status is the same
             else if (books[bookId] != status)
             {
-                library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+                library = db.Collection("users").Document(userId).Collection(language + "-library");
                 await library.Document("library-data").Update("books." + bookId, status);
-                await UpdateCounts(language);
+                await UpdateCounts(userId, language);
                 if (status == "Read")
                 {
-                    await CreateGradings(bookId, language);
+                    await CreateGradings(userId, bookId, language);
                 }
             }
             
         }
 
-        public async Task<List<Book>> GetLibraryBooks(string language, string status)
+        public async Task<List<Book>> GetLibraryBooks(string userId, string language, string status)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+            CollectionReference library = db.Collection("users").Document(userId).Collection(language + "-library");
 
             var result = await library.Document("library-data").Get().ToAwaitableTask();
             JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
@@ -72,26 +72,26 @@ namespace LibeRate.Droid.Services
             return resultBooks;
         }
 
-        public async Task<List<Grading>> GetGradings(string language)
+        public async Task<List<Grading>> GetGradings(string userId, string language)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
             CollectionReference cr = db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(language + "-library")
                     .Document("library-data")
                     .Collection("gradings");
 
             var result = await cr.Get().ToAwaitableTask();
-            List<Grading> gradings = await ConvertFirestoreResultToGradingList(result);
+            List<Grading> gradings = await ConvertFirestoreResultToGradingList(language, result);
 
             return gradings;
         }
 
-        public async Task CompleteGrading(string gradingId, string language, string status)
+        public async Task CompleteGrading(string userId, string gradingId, string language, string status)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
             CollectionReference cr = db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(language + "-library")
                     .Document("library-data")
                     .Collection("gradings");
@@ -104,14 +104,14 @@ namespace LibeRate.Droid.Services
             await cr.Document(gradingId).Set(data, SetOptions.Merge());
 
             DocumentReference dr = db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(language + "-library")
                     .Document("library-data")
                     .Collection("gradings")
                     .Document("grading-data");
             await dr.Update("available_gradings", FieldValue.Increment(-1));
             dr = db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(language + "-library")
                     .Document("library-data")
                     .Collection("gradings")
@@ -119,11 +119,11 @@ namespace LibeRate.Droid.Services
             await dr.Update("completed_gradings", FieldValue.Increment(1));
         }
 
-        private async Task UpdateCounts(string language)
+        private async Task UpdateCounts(string userId, string language)
         {
             await Task.Delay(2000);
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+            CollectionReference library = db.Collection("users").Document(userId).Collection(language + "-library");
 
             var result = await library.Document("library-data").Get().ToAwaitableTask();
             JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
@@ -157,11 +157,11 @@ namespace LibeRate.Droid.Services
             await library.Document("library-data").Set(libraryData, SetOptions.Merge());
         }
 
-        private async Task CreateGradings(string bookId, string language)
+        private async Task CreateGradings(string userId, string bookId, string language)
         {
             await Task.Delay(2000);
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            CollectionReference library = db.Collection("users").Document(App.CurrentUser.Id).Collection(language + "-library");
+            CollectionReference library = db.Collection("users").Document(userId).Collection(language + "-library");
 
             var result = await library.Document("library-data").Get().ToAwaitableTask();
             JavaDictionary<string, string> books = ConvertFirestoreResultToDictionary(result);
@@ -181,7 +181,7 @@ namespace LibeRate.Droid.Services
                         var x = addedBook.DifficultyRating - compareBook.DifficultyRating;
                         if(x >= -5 || x <= 5)
                         {
-                            await CreateGrading(addedBook.Id, compareBook.Id, language);
+                            await CreateGrading(userId, addedBook.Id, compareBook.Id, language);
                             newGradingCount++;
                         }
                     }
@@ -190,7 +190,7 @@ namespace LibeRate.Droid.Services
                 if(newGradingCount > 0)
                 {
                     CollectionReference gradings = db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(language + "-library")
                     .Document("library-data")
                     .Collection("gradings");
@@ -201,11 +201,11 @@ namespace LibeRate.Droid.Services
             }
         }
 
-        private async Task CreateGrading(string book1, string book2, string language)
+        private async Task CreateGrading(string userId, string book1, string book2, string language)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
             CollectionReference gradings = db.Collection("users")
-                .Document(App.CurrentUser.Id)
+                .Document(userId)
                 .Collection(language + "-library")
                 .Document("library-data")
                 .Collection("gradings");
@@ -220,7 +220,7 @@ namespace LibeRate.Droid.Services
             await gradings.Add(data);
         }
 
-        private async Task<List<Grading>> ConvertFirestoreResultToGradingList(Java.Lang.Object result)
+        private async Task<List<Grading>> ConvertFirestoreResultToGradingList(string language, Java.Lang.Object result)
         {
             var snapshot = (QuerySnapshot)result;
             List<Grading> gradings = new List<Grading>();
@@ -238,8 +238,8 @@ namespace LibeRate.Droid.Services
                             string id1 = doc.Get("book1").ToString();
                             string id2 = doc.Get("book2").ToString();
 
-                            Book book1 = await bs.GetBook(App.CurrentUser.TargetLanguage, id1);
-                            Book book2 = await bs.GetBook(App.CurrentUser.TargetLanguage, id2);
+                            Book book1 = await bs.GetBook(language, id1);
+                            Book book2 = await bs.GetBook(language, id2);
 
                             Grading g = new Grading(id, book1, book2);
                             gradings.Add(g);

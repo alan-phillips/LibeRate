@@ -124,7 +124,7 @@
     <value>ブラウズ</value>
   </data>
   <data name="ChangeTargetLanguageSetting" xml:space="preserve">
-    <value>目的言語を変更</value>
+    <value>目標言語を変更</value>
   </data>
   <data name="ConfirmButton" xml:space="preserve">
     <value>確認</value>
@@ -163,7 +163,7 @@
     <value>検索</value>
   </data>
   <data name="SelectTargetLanguageTitle" xml:space="preserve">
-    <value>目的言語を選択</value>
+    <value>目標言語を選択</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>設定</value>
@@ -194,5 +194,17 @@
   </data>
   <data name="DifficultyRangeLabel" xml:space="preserve">
     <value>難易度</value>
+  </data>
+  <data name="SelectTargetLanguageLabel" xml:space="preserve">
+    <value>学習している言語をお選びください</value>
+  </data>
+  <data name="TargetLanguageLabel" xml:space="preserve">
+    <value>目標言語：</value>
+  </data>
+  <data name="DateJoinedLabel" xml:space="preserve">
+    <value>登録日：</value>
+  </data>
+  <data name="ViewLibraryLabel" xml:space="preserve">
+    <value>ライブラリを閲覧</value>
   </data>
 </root>

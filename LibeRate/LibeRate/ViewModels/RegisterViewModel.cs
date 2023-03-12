@@ -77,7 +77,7 @@ namespace LibeRate.ViewModels
                 {
                     IUserService userService = DependencyService.Get<IUserService>();
                     App.CurrentUser.Id = auth.GetUserID();
-                    await userService.CreateUserProfile(Username);
+                    await userService.CreateUserProfile(App.CurrentUser.Id, Username);
                     await Shell.Current.GoToAsync($"//{nameof(SelectTargetLanguagePage)}");
                 }
             }

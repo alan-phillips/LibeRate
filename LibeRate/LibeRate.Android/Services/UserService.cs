@@ -45,10 +45,10 @@ namespace LibeRate.Droid.Services
             return user;
         }
 
-        public async Task CreateUserProfile(string username)
+        public async Task CreateUserProfile(string userId, string username)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
-            DocumentReference dr = db.Collection("users").Document(App.CurrentUser.Id);
+            DocumentReference dr = db.Collection("users").Document(userId);
             JavaDictionary<string, object> user = new JavaDictionary<string, object>
             {
                 { "username", username },
@@ -57,11 +57,11 @@ namespace LibeRate.Droid.Services
             await dr.Set(user);
         }
 
-        public async Task SetTargetLanguage(string languageid)
+        public async Task SetTargetLanguage(string userId, string languageid)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
             var result = await db.Collection("users")
-                .Document(App.CurrentUser.Id)
+                .Document(userId)
                 .Collection(languageid+"-library")
                 .Document("library-data")
                 .Get().ToAwaitableTask();
@@ -83,7 +83,7 @@ namespace LibeRate.Droid.Services
                 
                 libData.Add("books", lib);
                 await db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(languageid + "-library")
                     .Document("library-data")
                     .Set(libData);
@@ -94,7 +94,7 @@ namespace LibeRate.Droid.Services
                     { "completed_gradings", 0 }
                 };
                 await db.Collection("users")
-                    .Document(App.CurrentUser.Id)
+                    .Document(userId)
                     .Collection(languageid + "-library")
                     .Document("library-data")
                     .Collection("gradings")
@@ -106,7 +106,7 @@ namespace LibeRate.Droid.Services
             {
                 { "target_language", languageid }
             };
-            await db.Collection("users").Document(App.CurrentUser.Id).Set(data, SetOptions.Merge());
+            await db.Collection("users").Document(userId).Set(data, SetOptions.Merge());
         }
 
         private User ConvertFirestoreResultToUser(Java.Lang.Object result)

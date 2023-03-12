@@ -41,7 +41,7 @@ namespace LibeRate.ViewModels
         {
             IUserService userService = DependencyService.Get<IUserService>();
 
-            await userService.SetTargetLanguage(SelectedLanguage.LanguageID);
+            await userService.SetTargetLanguage(App.CurrentUser.Id, SelectedLanguage.LanguageID);
 
             App.CurrentUser = await userService.GetUser(App.CurrentUser.Id);
             App.LanguageChanged = true;

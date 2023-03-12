@@ -106,6 +106,15 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Joined:.
+        /// </summary>
+        public static string DateJoinedLabel {
+            get {
+                return ResourceManager.GetString("DateJoinedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difficulty Range:.
         /// </summary>
         public static string DifficultyRangeLabel {
@@ -250,6 +259,15 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the language you are learning.
+        /// </summary>
+        public static string SelectTargetLanguageLabel {
+            get {
+                return ResourceManager.GetString("SelectTargetLanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Target Language.
         /// </summary>
         public static string SelectTargetLanguageTitle {
@@ -286,11 +304,29 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Language:.
+        /// </summary>
+        public static string TargetLanguageLabel {
+            get {
+                return ResourceManager.GetString("TargetLanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UsernameEntryPlaceholder {
             get {
                 return ResourceManager.GetString("UsernameEntryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Library.
+        /// </summary>
+        public static string ViewLibraryLabel {
+            get {
+                return ResourceManager.GetString("ViewLibraryLabel", resourceCulture);
             }
         }
     }
