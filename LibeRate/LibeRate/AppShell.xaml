@@ -102,7 +102,7 @@
         <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Grade Books" IsVisible="{Binding CanGradeBooks}">
+    <FlyoutItem Title="Grade Books" IsVisible="{Binding CanGradeBooks}" Icon="grading_available.png">
         <ShellContent Route="GradeBooksPage" ContentTemplate="{DataTemplate local:GradeBooksPage}" />
     </FlyoutItem>
 
