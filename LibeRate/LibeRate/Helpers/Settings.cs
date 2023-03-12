@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using LibeRate.Resx;
+using System.Globalization;
 
 namespace LibeRate.Helpers
 {
@@ -19,7 +20,7 @@ namespace LibeRate.Helpers
 
         private const string selectedLanguageKey = "selected_language";
 
-        private static readonly string defaultLanguage = "en";
+        private static readonly string defaultLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         
         public static string SelectedLanguage
         {

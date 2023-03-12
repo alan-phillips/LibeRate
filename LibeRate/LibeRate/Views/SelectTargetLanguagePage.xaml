@@ -7,7 +7,6 @@
              x:Class="LibeRate.Views.SelectTargetLanguagePage"
              x:DataType="viewmodels:SelectTargetLanguageViewModel"
              xmlns:resources="clr-namespace:LibeRate.Resx"
-             Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled"
              Title="{xct:Translate SelectTargetLanguageTitle}">
     <ContentPage.BindingContext>

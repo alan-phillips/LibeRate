@@ -17,6 +17,7 @@ namespace LibeRate
             Routing.RegisterRoute(nameof(LibraryPage), typeof(LibraryPage));
             Routing.RegisterRoute(nameof(BookRequestPage), typeof(BookRequestPage));
             Routing.RegisterRoute(nameof(InternetDisconnectedPage), typeof(InternetDisconnectedPage));
+            Routing.RegisterRoute(nameof(SelectTargetLanguagePage), typeof(SelectTargetLanguagePage));
 
         }
 

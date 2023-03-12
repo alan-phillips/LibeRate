@@ -7,6 +7,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
 using LibeRate.Services;
 using LibeRate.Views;
+using Xamarin.CommunityToolkit.Helpers;
+using LibeRate.Resx;
 
 namespace LibeRate.ViewModels
 {
@@ -18,10 +20,12 @@ namespace LibeRate.ViewModels
 
         public SelectTargetLanguageViewModel()
         {
+            LocalizedString english = new LocalizedString(() => string.Format(AppResources.English));
+            LocalizedString japanese = new LocalizedString(() => string.Format(AppResources.Japanese));
             Languages = new ObservableCollection<LanguageMenuItem>
             {
-                new LanguageMenuItem("english", "English", "united_kingdom.png"),
-                new LanguageMenuItem("japanese", "Japanese", "japan.png")
+                new LanguageMenuItem("english", english.Localized, "united_kingdom.png"),
+                new LanguageMenuItem("japanese", japanese.Localized, "japan.png")
             };
 
             ConfirmSelectionCommand = new Command(ConfirmSelection);

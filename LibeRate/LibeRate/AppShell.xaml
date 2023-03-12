@@ -90,10 +90,6 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
 
-    <ShellItem Route="SelectTargetLanguagePage" FlyoutItemIsVisible="False">
-        <ShellContent ContentTemplate="{DataTemplate local:SelectTargetLanguagePage}" />
-    </ShellItem>
-    
     <FlyoutItem Title="{xct:Translate SearchTitle}" Icon="search.png">
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>

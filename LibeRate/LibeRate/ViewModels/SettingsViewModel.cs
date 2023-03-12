@@ -34,7 +34,7 @@ namespace LibeRate.ViewModels
 
         private async Task ChangeTargetLanguage()
         {
-            await Shell.Current.GoToAsync($"//{nameof(SelectTargetLanguagePage)}");
+            await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
         }
 
         private async Task SetDisplayLanguage()
