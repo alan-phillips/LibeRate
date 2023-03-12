@@ -30,8 +30,15 @@
                                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                 </Frame>
                 <Label Text="{Binding DisplayBook.Title}" FontSize="Title" />
-                <Label Text="{Binding DisplayBook.Author, StringFormat='By: {0}'}" FontSize="Subtitle" />
-                <Label Text="{Binding DisplayBook.UserCount, StringFormat='Active Users: {0}'}" FontSize="Body" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{xct:Translate ByAuthorLabel}" FontSize="Subtitle" />
+                    <Label Text="{Binding DisplayBook.Author}" FontSize="Subtitle" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{xct:Translate ActiveUsersLabel}" FontSize="Body" />
+                    <Label Text="{Binding DisplayBook.UserCount}" FontSize="Body" />
+                </StackLayout>
+
             </StackLayout>
             <StackLayout HorizontalOptions="Center" VerticalOptions="EndAndExpand">
                 <Button Text="{xct:Translate AddToLibraryButton}" 

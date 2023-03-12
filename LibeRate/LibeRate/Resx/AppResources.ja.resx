@@ -207,4 +207,16 @@
   <data name="ViewLibraryLabel" xml:space="preserve">
     <value>ライブラリを閲覧</value>
   </data>
+  <data name="ByAuthorLabel" xml:space="preserve">
+    <value>著者：</value>
+  </data>
+  <data name="ActiveUsersLabel" xml:space="preserve">
+    <value>ユーザー数：</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>英語</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>日本語</value>
+  </data>
 </root>

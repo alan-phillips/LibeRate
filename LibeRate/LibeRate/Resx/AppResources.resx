@@ -212,4 +212,16 @@
   <data name="ViewLibraryLabel" xml:space="preserve">
     <value>View Library</value>
   </data>
+  <data name="ByAuthorLabel" xml:space="preserve">
+    <value>By:</value>
+  </data>
+  <data name="ActiveUsersLabel" xml:space="preserve">
+    <value>Active Users:</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
 </root>

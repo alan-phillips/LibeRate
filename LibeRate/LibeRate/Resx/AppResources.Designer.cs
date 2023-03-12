@@ -61,6 +61,15 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Users:.
+        /// </summary>
+        public static string ActiveUsersLabel {
+            get {
+                return ResourceManager.GetString("ActiveUsersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to library.
         /// </summary>
         public static string AddToLibraryButton {
@@ -75,6 +84,15 @@ namespace LibeRate.Resx {
         public static string BrowseTitle {
             get {
                 return ResourceManager.GetString("BrowseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By:.
+        /// </summary>
+        public static string ByAuthorLabel {
+            get {
+                return ResourceManager.GetString("ByAuthorLabel", resourceCulture);
             }
         }
         
@@ -133,6 +151,15 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Which book was more difficult?.
         /// </summary>
         public static string GradeBooksLabel {
@@ -147,6 +174,15 @@ namespace LibeRate.Resx {
         public static string ItemsPerPageLabel {
             get {
                 return ResourceManager.GetString("ItemsPerPageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Japanese.
+        /// </summary>
+        public static string Japanese {
+            get {
+                return ResourceManager.GetString("Japanese", resourceCulture);
             }
         }
         
