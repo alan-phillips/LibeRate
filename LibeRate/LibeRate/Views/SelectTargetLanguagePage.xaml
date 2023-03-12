@@ -16,7 +16,7 @@
 
     <ContentPage.Content>
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-
+            <Label Text="{xct:Translate SelectTargetLanguageLabel}" FontSize="Title"/>
             <ListView
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 ItemsSource="{Binding Languages}"

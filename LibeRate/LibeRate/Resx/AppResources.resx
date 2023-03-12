@@ -200,4 +200,16 @@
     <value>Difficulty Range:</value>
     <comment>@MutedRule(PunctuationTail)</comment>
   </data>
+  <data name="SelectTargetLanguageLabel" xml:space="preserve">
+    <value>Select the language you are learning</value>
+  </data>
+  <data name="TargetLanguageLabel" xml:space="preserve">
+    <value>Target Language:</value>
+  </data>
+  <data name="DateJoinedLabel" xml:space="preserve">
+    <value>Date Joined:</value>
+  </data>
+  <data name="ViewLibraryLabel" xml:space="preserve">
+    <value>View Library</value>
+  </data>
 </root>

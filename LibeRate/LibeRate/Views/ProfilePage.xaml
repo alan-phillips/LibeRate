@@ -15,16 +15,25 @@
                    FontSize="Title"
                 VerticalOptions="Start" 
                 HorizontalOptions="Start" />
-            <Label Text="{Binding Profile.TargetLanguage, StringFormat='Target Language: {0}'}"
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{xct:Translate TargetLanguageLabel}"
                    FontSize="Body"
                    VerticalOptions="Start"
                    HorizontalOptions="Start"/>
-            <Label Text="{Binding Profile.AccountCreated, StringFormat='Date Joined: {0:d}'}"
-                   FontSize="Body"
-                   VerticalOptions="Start"
-                   HorizontalOptions="Start"/>
+                <Label Text="{Binding Profile.TargetLanguage}"
+                       FontSize="Body"/>
+            </StackLayout>
 
-            <Button Text="View Library"
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{xct:Translate DateJoinedLabel}"
+                   FontSize="Body"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"/>
+                <Label Text="{Binding Profile.AccountCreated, StringFormat='{0:d}'}"/>
+            </StackLayout>
+
+
+            <Button Text="{xct:Translate ViewLibraryLabel}"
                     VerticalOptions="EndAndExpand"
                     HorizontalOptions="Center"
                     Command="{Binding ViewLibraryCommand}"/>

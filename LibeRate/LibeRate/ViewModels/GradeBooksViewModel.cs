@@ -70,7 +70,7 @@ namespace LibeRate.ViewModels
 
         private async Task LoadGradings()
         {
-            List<Grading> gradings = await libraryService.GetGradings(App.CurrentUser.TargetLanguage);
+            List<Grading> gradings = await libraryService.GetGradings(App.CurrentUser.Id, App.CurrentUser.TargetLanguage);
             foreach(Grading grading in gradings)
             {
                 Gradings.Add(grading); 
@@ -116,7 +116,7 @@ namespace LibeRate.ViewModels
                     await bs.SetDifficultyRating(App.CurrentUser.TargetLanguage, grading.Book2.Id, newRatings[1]);
                 }
 
-                await libraryService.CompleteGrading(grading.Id, App.CurrentUser.TargetLanguage, grading.Result);
+                await libraryService.CompleteGrading(App.CurrentUser.Id, grading.Id, App.CurrentUser.TargetLanguage, grading.Result);
                 
             }
             App.CurrentUser.CanGradeBooks = false;

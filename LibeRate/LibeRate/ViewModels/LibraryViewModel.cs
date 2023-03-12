@@ -37,21 +37,21 @@ namespace LibeRate.ViewModels
 
         private async Task LoadBooks()
         {
-            List<Book> readResult = await libraryService.GetLibraryBooks(App.CurrentUser.TargetLanguage, ReadLibrary.Name);
+            List<Book> readResult = await libraryService.GetLibraryBooks(App.CurrentUser.Id, App.CurrentUser.TargetLanguage, ReadLibrary.Name);
 
             foreach(Book book in readResult) 
             { 
                 ReadLibrary.Add(book);
             }
 
-            List<Book> ownedResult = await libraryService.GetLibraryBooks(App.CurrentUser.TargetLanguage, OwnedLibrary.Name);
+            List<Book> ownedResult = await libraryService.GetLibraryBooks(App.CurrentUser.Id, App.CurrentUser.TargetLanguage, OwnedLibrary.Name);
 
             foreach (Book book in ownedResult)
             {
                 OwnedLibrary.Add(book);
             }
             
-            List<Book> wishlistResult = await libraryService.GetLibraryBooks(App.CurrentUser.TargetLanguage, WishlistLibrary.Name);
+            List<Book> wishlistResult = await libraryService.GetLibraryBooks(App.CurrentUser.Id, App.CurrentUser.TargetLanguage, WishlistLibrary.Name);
 
             foreach (Book book in wishlistResult)
             {

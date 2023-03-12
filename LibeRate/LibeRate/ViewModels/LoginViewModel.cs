@@ -63,6 +63,8 @@ namespace LibeRate.ViewModels
             if (auth.IsSignedIn())
             {
                 App.CurrentUser.Id = auth.GetUserID();
+                IUserService userService = DependencyService.Get<IUserService>();
+                App.CurrentUser = await userService.GetUser(App.CurrentUser.Id);
                 await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
             }
         }
