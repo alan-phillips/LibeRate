@@ -10,6 +10,8 @@ namespace LibeRate.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
+        private string _errorMessage;
+        private bool _errorMessageVisible;
         private string _email;
         private string _username;
         private string _password;
@@ -24,6 +26,32 @@ namespace LibeRate.ViewModels
         {
             return  !String.IsNullOrWhiteSpace(_username)
                 && !String.IsNullOrWhiteSpace(_password);
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    OnPropertyChanged(nameof(ErrorMessage));
+                }
+            }
+        }
+
+        public bool ErrorMessageVisible
+        {
+            get => _errorMessageVisible;
+            set
+            {
+                if (_errorMessageVisible != value)
+                {
+                    _errorMessageVisible = value;
+                    OnPropertyChanged(nameof(ErrorMessageVisible));
+                }
+            }
         }
 
         public string Email
@@ -70,7 +98,7 @@ namespace LibeRate.ViewModels
         {
             IFirebaseAuthentication auth = DependencyService.Get<IFirebaseAuthentication>();
             string result = await auth.RegisterWithEmailAndPassword(Email, Password);
-            if (result != string.Empty)
+            if (!result.StartsWith("!"))
             {
                 await auth.LoginWithEmailAndPassword(Email, Password);
                 if (auth.IsSignedIn())
@@ -80,6 +108,10 @@ namespace LibeRate.ViewModels
                     await userService.CreateUserProfile(App.CurrentUser.Id, Username);
                     await Shell.Current.GoToAsync($"//{nameof(SelectTargetLanguagePage)}");
                 }
+            } else
+            {
+                ErrorMessage = result.Substring(1);
+                ErrorMessageVisible = true;
             }
         }
     }

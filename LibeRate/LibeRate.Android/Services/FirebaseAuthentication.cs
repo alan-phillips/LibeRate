@@ -35,12 +35,12 @@ namespace LibeRate.Droid.Services
             catch (FirebaseAuthInvalidCredentialsException e) //thrown if email is malformed
             {
                 e.PrintStackTrace();
-                return string.Empty;
+                return "!The email address you entered is invalid.";
             }
             catch (FirebaseAuthUserCollisionException e) //thrown if account with email exists
             {
                 e.PrintStackTrace();
-                return string.Empty;
+                return "!An account with this email already exists.";
             }
         }
 
@@ -56,12 +56,12 @@ namespace LibeRate.Droid.Services
             catch (FirebaseAuthInvalidUserException e)
             {
                 e.PrintStackTrace();
-                return string.Empty;
+                return "!An account with the specified email does not exist.";
             }
             catch (FirebaseAuthInvalidCredentialsException e)
             {
                 e.PrintStackTrace();
-                return string.Empty;
+                return "!The entered username or password is invalid.";
             }
         }
 

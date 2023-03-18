@@ -35,6 +35,7 @@
                     <TapGestureRecognizer Command="{Binding RegisterCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding ErrorMessageVisible}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

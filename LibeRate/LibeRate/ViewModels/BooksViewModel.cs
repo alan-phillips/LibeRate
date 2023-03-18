@@ -176,6 +176,7 @@ namespace LibeRate.ViewModels
                 filterSettings = (Dictionary<string, object>)popupResult;
                 PageNumber= 1;
                 PreviousButtonVisible = false;
+                bookService.ResetService();
                 Refresh();
             }
             

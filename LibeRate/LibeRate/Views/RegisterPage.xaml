@@ -25,6 +25,7 @@
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Center"/>
             <Button VerticalOptions="Center" Text="Register" Command="{Binding RegisterCommand}"/>
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding ErrorMessageVisible}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
