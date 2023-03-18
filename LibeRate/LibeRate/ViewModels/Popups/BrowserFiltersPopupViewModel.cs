@@ -36,9 +36,9 @@ namespace LibeRate.ViewModels.Popups
             };
             ItemsPerPage = new List<int>
             {
-                1,
-                3,
-                5
+                5,
+                10,
+                25
             };
             
             SelectedFilter = (string)CurrentFilterSettings["filter"];

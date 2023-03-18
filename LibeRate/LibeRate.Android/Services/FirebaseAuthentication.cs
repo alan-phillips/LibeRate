@@ -31,7 +31,12 @@ namespace LibeRate.Droid.Services
                 var token = await FirebaseAuth.Instance.CurrentUser.GetIdToken(true).AsAsync<GetTokenResult>();
 
                 return token.Token;
-            } 
+            }
+            catch (FirebaseAuthWeakPasswordException e) //thrown if password bad
+            {
+                e.PrintStackTrace();
+                return "!Your password must be at least 6 characters.";
+            }
             catch (FirebaseAuthInvalidCredentialsException e) //thrown if email is malformed
             {
                 e.PrintStackTrace();
@@ -41,7 +46,7 @@ namespace LibeRate.Droid.Services
             {
                 e.PrintStackTrace();
                 return "!An account with this email already exists.";
-            }
+            } 
         }
 
         public async Task<string> LoginWithEmailAndPassword(string email, string password)

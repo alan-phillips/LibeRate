@@ -36,7 +36,7 @@ namespace LibeRate.ViewModels
             filterSettings = new Dictionary<string, object>
             {
                 { "search_query", "" },
-                { "items_per_page", 3 },
+                { "items_per_page", 5 },
                 { "filter", "Popularity" },
                 { "lower_difficulty", 0 },
                 { "higher_difficulty", 50 }

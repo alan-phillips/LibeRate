@@ -7,7 +7,7 @@
              x:Class="LibeRate.Views.SelectTargetLanguagePage"
              x:DataType="viewmodels:SelectTargetLanguageViewModel"
              xmlns:resources="clr-namespace:LibeRate.Resx"
-             Shell.FlyoutBehavior="Disabled"
+             Shell.BackgroundColor="{StaticResource Primary}"
              Title="{xct:Translate SelectTargetLanguageTitle}">
     <ContentPage.BindingContext>
         <viewmodels:SelectTargetLanguageViewModel />

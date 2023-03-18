@@ -93,7 +93,13 @@ namespace LibeRate.ViewModels
                 App.CurrentUser.Id = auth.GetUserID();
                 IUserService userService = DependencyService.Get<IUserService>();
                 App.CurrentUser = await userService.GetUser(App.CurrentUser.Id);
-                await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
+                if(App.CurrentUser.TargetLanguage == "")
+                {
+                    await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
+                } else
+                {
+                    await Shell.Current.GoToAsync($"///{nameof(SearchPage)}");
+                }
             } else
             {
                 ErrorMessage = result.Substring(1);

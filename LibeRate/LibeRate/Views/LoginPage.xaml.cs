@@ -36,7 +36,14 @@ namespace LibeRate.Views
                     {
                         IUserService userService = DependencyService.Get<IUserService>();
                         App.CurrentUser = await userService.GetUser(auth.GetUserID());
-                        await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
+                        if (App.CurrentUser.TargetLanguage == "")
+                        {
+                            await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
+                        }
+                        else
+                        {
+                            await Shell.Current.GoToAsync($"///{nameof(SearchPage)}");
+                        }
                     }
 
                 }

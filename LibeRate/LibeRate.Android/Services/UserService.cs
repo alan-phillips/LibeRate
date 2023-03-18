@@ -52,6 +52,7 @@ namespace LibeRate.Droid.Services
             JavaDictionary<string, object> user = new JavaDictionary<string, object>
             {
                 { "username", username },
+                { "target_language", "" },
                 { "date_created", DateTime.Now.ToString() }
             };
             await dr.Set(user);
