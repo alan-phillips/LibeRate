@@ -1,4 +1,5 @@
-﻿using LibeRate.Services;
+﻿using LibeRate.Models;
+using LibeRate.Services;
 using LibeRate.Views;
 using System;
 using System.Collections.Generic;
@@ -72,10 +73,10 @@ namespace LibeRate.ViewModels
             {
                 { "amazon_url", BookUrl },
                 { "estimated_difficulty", difficulty },
-                { "request_user", App.CurrentUser.Id }
+                { "request_user", CurrentUser.Instance.Id }
             };
 
-            await bs.CreateBookRequest(App.CurrentUser.TargetLanguage, data);
+            await bs.CreateBookRequest(CurrentUser.Instance.TargetLanguage, data);
             await Shell.Current.GoToAsync($"///{nameof(SearchPage)}");
         }
     }

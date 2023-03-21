@@ -107,8 +107,7 @@ namespace LibeRate.ViewModels
                 if (auth.IsSignedIn())
                 {
                     IUserService userService = DependencyService.Get<IUserService>();
-                    App.CurrentUser.Id = auth.GetUserID();
-                    await userService.CreateUserProfile(App.CurrentUser.Id, Username);
+                    await userService.CreateUserProfile(auth.GetUserID(), Username);
                     await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
                 }
             } else

@@ -45,10 +45,10 @@ namespace LibeRate.ViewModels
         {
             IUserService userService = DependencyService.Get<IUserService>();
 
-            await userService.SetTargetLanguage(App.CurrentUser.Id, SelectedLanguage.LanguageID);
+            await userService.SetTargetLanguage(CurrentUser.Instance.Id, SelectedLanguage.LanguageID);
 
-            App.CurrentUser = await userService.GetUser(App.CurrentUser.Id);
-            App.LanguageChanged = true;
+            await CurrentUser.LoadUser(CurrentUser.Instance.Id);
+
             await Shell.Current.Navigation.PopToRootAsync();
             await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
         }

@@ -21,7 +21,6 @@ namespace LibeRate.Views
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			Shell.Current.BindingContext = new ShellViewModel();
 		}
 	}
 }

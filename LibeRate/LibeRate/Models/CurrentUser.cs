@@ -9,25 +9,28 @@ namespace LibeRate.Models
 {
     public class CurrentUser : User
     {
-        private CurrentUser()
-        {
-            IFirebaseAuthentication auth = DependencyService.Get<IFirebaseAuthentication>();
-            if (auth.IsSignedIn())
-            {
-                Task.Run(async () => await LoadUser(auth.GetUserID()));
-            }
-        }
-
         private static CurrentUser _instance = new CurrentUser();
         public static CurrentUser Instance
         {
             get { return _instance; }
         }
 
-        private async Task LoadUser(string id)
+        public static async Task LoadUser(string id)
         {
             IUserService userService = DependencyService.Get<IUserService>();
-            _instance = (CurrentUser)await userService.GetUser(id);
+            User u = await userService.GetUser(id);
+            if (u != null)
+            {
+                _instance.Id = u.Id;
+                _instance.AccountCreated = u.AccountCreated;
+                _instance.Username = u.Username;
+                _instance.TargetLanguage = u.TargetLanguage;    
+                _instance.CanGradeBooks = u.CanGradeBooks;
+
+                Instance.UserReloaded?.Invoke(Instance, EventArgs.Empty);
+            }
         }
+
+        public event EventHandler UserReloaded;
     }
 }

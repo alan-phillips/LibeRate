@@ -70,7 +70,7 @@ namespace LibeRate.ViewModels
 
         private async Task LoadGradings()
         {
-            List<Grading> gradings = await libraryService.GetGradings(App.CurrentUser.Id, App.CurrentUser.TargetLanguage);
+            List<Grading> gradings = await libraryService.GetGradings(CurrentUser.Instance.Id, CurrentUser.Instance.TargetLanguage);
             foreach(Grading grading in gradings)
             {
                 Gradings.Add(grading); 
@@ -112,14 +112,14 @@ namespace LibeRate.ViewModels
 
                     float[] newRatings = EloCalculator.CalculateElo(rating1, rating2, grading.Result);
 
-                    await bs.SetDifficultyRating(App.CurrentUser.TargetLanguage, grading.Book1.Id, newRatings[0]);
-                    await bs.SetDifficultyRating(App.CurrentUser.TargetLanguage, grading.Book2.Id, newRatings[1]);
+                    await bs.SetDifficultyRating(CurrentUser.Instance.TargetLanguage, grading.Book1.Id, newRatings[0]);
+                    await bs.SetDifficultyRating(CurrentUser.Instance.TargetLanguage, grading.Book2.Id, newRatings[1]);
                 }
 
-                await libraryService.CompleteGrading(App.CurrentUser.Id, grading.Id, App.CurrentUser.TargetLanguage, grading.Result);
+                await libraryService.CompleteGrading(CurrentUser.Instance.Id, grading.Id, CurrentUser.Instance.TargetLanguage, grading.Result);
                 
             }
-            App.CurrentUser.CanGradeBooks = false;
+            CurrentUser.Instance.CanGradeBooks = false;
             await Shell.Current.GoToAsync($"//{nameof(SearchPage)}");
         }
     }

@@ -196,8 +196,8 @@ namespace LibeRate.Droid.Services
                     .Collection("gradings");
 
                     await gradings.Document("grading-data").Update("available_gradings", FieldValue.Increment(newGradingCount));
-                    App.CurrentUser.CanGradeBooks= true;
-                }
+                    await CurrentUser.LoadUser(userId);
+                }   
             }
         }
 

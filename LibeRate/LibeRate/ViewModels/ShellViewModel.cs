@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibeRate.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +12,13 @@ namespace LibeRate.ViewModels
 
         public ShellViewModel() 
         {
-            CanGradeBooks = App.CurrentUser.CanGradeBooks;        
+            CurrentUser.Instance.UserReloaded += CurrentUser_UserReloaded;
+            CanGradeBooks = CurrentUser.Instance.CanGradeBooks;        
+        }
+
+        void CurrentUser_UserReloaded(object sender, EventArgs e)
+        {
+            CanGradeBooks = CurrentUser.Instance.CanGradeBooks;
         }
     }
 }

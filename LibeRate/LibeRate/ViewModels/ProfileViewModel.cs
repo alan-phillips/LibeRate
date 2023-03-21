@@ -1,4 +1,5 @@
 ﻿using LibeRate.Models;
+using LibeRate.Services;
 using LibeRate.Views;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,34 @@ namespace LibeRate.ViewModels
 {
     public class ProfileViewModel : BaseViewModel
     {
-        public User Profile { get; set; }
+        private User _profile;
+        public User Profile {
+            get => _profile;
+            set
+            {
+                _profile = value;
+                OnPropertyChanged(nameof(Profile));
+            }
+        }
         public IAsyncCommand ViewLibraryCommand { get; }
+
         public ProfileViewModel() 
         {
-            Profile = App.CurrentUser;
+            Profile = CurrentUser.Instance;
+            CurrentUser.Instance.UserReloaded += CurrentUser_UserReloaded;
 
             ViewLibraryCommand = new AsyncCommand(ViewLibrary);
+
         }
 
         private async Task ViewLibrary()
         {
             await Shell.Current.GoToAsync(nameof(LibraryPage));
+        }
+
+        void CurrentUser_UserReloaded(object sender, EventArgs e)
+        {
+            Profile = CurrentUser.Instance;
         }
     }
 }

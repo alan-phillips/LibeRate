@@ -38,7 +38,7 @@ namespace LibeRate.ViewModels
 
         private async Task LoadBook(string bookId)
         {
-            DisplayBook = await bookService.GetBook(App.CurrentUser.TargetLanguage, bookId);
+            DisplayBook = await bookService.GetBook(CurrentUser.Instance.TargetLanguage, bookId);
         }
 
         private async Task AddToLibrary()
@@ -48,7 +48,7 @@ namespace LibeRate.ViewModels
             if (selection != "Cancel")
             {
                 ILibraryService libraryService = DependencyService.Get<ILibraryService>();
-                await libraryService.AddBookToLibrary(App.CurrentUser.Id, displayBook.Id, App.CurrentUser.TargetLanguage, selection);
+                await libraryService.AddBookToLibrary(CurrentUser.Instance.Id, displayBook.Id, CurrentUser.Instance.TargetLanguage, selection);
             }
         }
     }

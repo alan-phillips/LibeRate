@@ -1,4 +1,5 @@
-﻿using LibeRate.Services;
+﻿using LibeRate.Models;
+using LibeRate.Services;
 using LibeRate.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,8 @@ namespace LibeRate.Views
                 {
                     if (auth.IsSignedIn())
                     {
-                        IUserService userService = DependencyService.Get<IUserService>();
-                        App.CurrentUser = await userService.GetUser(auth.GetUserID());
-                        if (App.CurrentUser.TargetLanguage == "")
+                        await CurrentUser.LoadUser(auth.GetUserID());
+                        if (CurrentUser.Instance.TargetLanguage == "")
                         {
                             await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
                         }

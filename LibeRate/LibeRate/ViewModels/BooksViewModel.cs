@@ -52,6 +52,8 @@ namespace LibeRate.ViewModels
             PreviousPageCommand = new Command(PreviousPage);
             OpenFiltersMenuCommand = new Command(async () => await OpenFiltersMenu());
 
+            CurrentUser.Instance.UserReloaded += CurrentUser_UserReloaded;
+
             bookService = DependencyService.Get<IBookService>();
             Books = new ObservableCollection<Book>();
         }
@@ -103,12 +105,6 @@ namespace LibeRate.ViewModels
         public void Refresh()
         {
             Books.Clear();
-            if(App.LanguageChanged==true) 
-            {
-                bookService.ResetService();
-                PageNumber = 1;
-                App.LanguageChanged = false;
-            }
             Task.Run(async () => await LoadBooks(false));
         }
 
@@ -119,7 +115,7 @@ namespace LibeRate.ViewModels
             IsBusy= true;
             Books.Clear();
 
-            List<Book> result = await bookService.GetBooks(App.CurrentUser.TargetLanguage, PageNumber, filterSettings, previous);
+            List<Book> result = await bookService.GetBooks(CurrentUser.Instance.TargetLanguage, PageNumber, filterSettings, previous);
             
             foreach(Book book in result)
             {
@@ -180,6 +176,21 @@ namespace LibeRate.ViewModels
                 Refresh();
             }
             
+        }
+
+        void CurrentUser_UserReloaded(object sender, EventArgs e)
+        {
+            filterSettings = new Dictionary<string, object>
+            {
+                { "search_query", "" },
+                { "items_per_page", 5 },
+                { "filter", "Popularity" },
+                { "lower_difficulty", 0 },
+                { "higher_difficulty", 50 }
+            };
+
+            bookService.ResetService();
+            PageNumber = 1;
         }
 
     }

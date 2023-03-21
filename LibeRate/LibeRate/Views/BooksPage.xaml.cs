@@ -21,12 +21,5 @@ namespace LibeRate.Views
 
         }
 
-        protected override void OnAppearing()
-        {
-            if(BindingContext is BooksViewModel viewModel && App.LanguageChanged==true)
-            {
-                viewModel.Refresh();
-            }
-        }
     }
 }
