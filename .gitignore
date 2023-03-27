@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/LibeRate/LibeRate.Android/google-services.json
+/LibeRate/LibeRate.iOS/GoogleService-Info.plist
