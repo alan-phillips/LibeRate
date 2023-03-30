@@ -37,7 +37,7 @@ namespace LibeRate.Droid.Services
             return book;
         }
 
-        public async Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous)
+        public async Task<List<Book>> GetBooks(string languageID, int pageNumber, Dictionary<string, object> filterSettings, bool previous, bool reloaded)
         {
             FirebaseFirestore db = FirebaseFirestore.Instance;
 
@@ -89,6 +89,10 @@ namespace LibeRate.Droid.Services
                 if (previous) 
                 { 
                     pageBottoms.Pop();
+                    pageBottoms.Pop();
+                }
+                if (reloaded)
+                {
                     pageBottoms.Pop();
                 }
                 query = query.StartAfter(pageBottoms.Peek())
