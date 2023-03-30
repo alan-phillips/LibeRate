@@ -196,7 +196,10 @@ namespace LibeRate.Droid.Services
             {
                 { "amazon_url", requestData["amazon_url"] },
                 { "estimated_difficulty", requestData["estimated_difficulty"] },
-                { "request_user", requestData["request_user"] }
+                { "request_user_id", requestData["request_user_id"] },
+                { "request_user_name", requestData["request_user_name"] },
+                { "request_status", "unfulfilled" },
+                { "date_requested", DateTime.Now.ToString() }
             };
 
             await db.Collection(languageID + "-book-requests").Add(data);

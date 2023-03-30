@@ -73,7 +73,8 @@ namespace LibeRate.ViewModels
             {
                 { "amazon_url", BookUrl },
                 { "estimated_difficulty", difficulty },
-                { "request_user", CurrentUser.Instance.Id }
+                { "request_user_id", CurrentUser.Instance.Id },
+                { "request_user_name", CurrentUser.Instance.Username }
             };
 
             await bs.CreateBookRequest(CurrentUser.Instance.TargetLanguage, data);
