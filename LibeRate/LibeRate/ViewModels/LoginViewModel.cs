@@ -90,7 +90,8 @@ namespace LibeRate.ViewModels
             string result = await auth.LoginWithEmailAndPassword(Username, Password);
             if (auth.IsSignedIn())
             {
-                if(CurrentUser.Instance.TargetLanguage == "")
+                await CurrentUser.LoadUser(auth.GetUserID());
+                if (CurrentUser.Instance.TargetLanguage == "")
                 {
                     await Shell.Current.GoToAsync($"{nameof(SelectTargetLanguagePage)}");
                 } else

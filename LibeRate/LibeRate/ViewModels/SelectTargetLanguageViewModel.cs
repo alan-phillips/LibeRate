@@ -20,18 +20,13 @@ namespace LibeRate.ViewModels
 
         public SelectTargetLanguageViewModel()
         {
-            LocalizedString english = new LocalizedString(() => string.Format(AppResources.English));
-            LocalizedString french = new LocalizedString(() => string.Format(AppResources.French));
-            LocalizedString spanish = new LocalizedString(() => string.Format(AppResources.Spanish));
-            LocalizedString german = new LocalizedString(() => string.Format(AppResources.German));
-            LocalizedString japanese = new LocalizedString(() => string.Format(AppResources.Japanese));
             Languages = new ObservableCollection<LanguageMenuItem>
             {
-                new LanguageMenuItem("english", english.Localized, "united_kingdom.png"),
-                new LanguageMenuItem("french", french.Localized, "france.png"),
-                new LanguageMenuItem("spanish", spanish.Localized, "spain.png"),
-                new LanguageMenuItem("german", german.Localized, "germany.png"),
-                new LanguageMenuItem("japanese", japanese.Localized, "japan.png")
+                new LanguageMenuItem("english", Language.languageTranslations["english"].Localized, "united_kingdom.png"),
+                new LanguageMenuItem("french", Language.languageTranslations["french"].Localized, "france.png"),
+                new LanguageMenuItem("spanish", Language.languageTranslations["spanish"].Localized, "spain.png"),
+                new LanguageMenuItem("german", Language.languageTranslations["german"].Localized, "germany.png"),
+                new LanguageMenuItem("japanese", Language.languageTranslations["japanese"].Localized, "japan.png")
             };
 
             ConfirmSelectionCommand = new Command(ConfirmSelection);

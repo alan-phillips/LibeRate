@@ -21,11 +21,22 @@ namespace LibeRate.ViewModels
                 OnPropertyChanged(nameof(Profile));
             }
         }
+        private string _targetLanguage;
+        public string TargetLanguage
+        {
+            get => _targetLanguage;
+            set
+            {
+                _targetLanguage = value;
+                OnPropertyChanged(nameof(TargetLanguage));
+            }
+        }
         public IAsyncCommand ViewLibraryCommand { get; }
 
         public ProfileViewModel() 
         {
             Profile = CurrentUser.Instance;
+            TargetLanguage = Language.languageTranslations[Profile.TargetLanguage].Localized;
             CurrentUser.Instance.UserReloaded += CurrentUser_UserReloaded;
 
             ViewLibraryCommand = new AsyncCommand(ViewLibrary);
@@ -40,6 +51,7 @@ namespace LibeRate.ViewModels
         void CurrentUser_UserReloaded(object sender, EventArgs e)
         {
             Profile = CurrentUser.Instance;
+            TargetLanguage = Language.languageTranslations[Profile.TargetLanguage].Localized;
         }
     }
 }

@@ -20,7 +20,7 @@
                    FontSize="Body"
                    VerticalOptions="Start"
                    HorizontalOptions="Start"/>
-                <Label Text="{Binding Profile.TargetLanguage}"
+                <Label Text="{Binding TargetLanguage}"
                        FontSize="Body"/>
             </StackLayout>
 
