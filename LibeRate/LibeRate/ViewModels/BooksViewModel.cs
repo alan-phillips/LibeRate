@@ -192,6 +192,8 @@ namespace LibeRate.ViewModels
 
             bookService.ResetService();
             PageNumber = 1;
+            PreviousButtonVisible = false;
+            NextButtonVisible = true;
         }
 
     }
