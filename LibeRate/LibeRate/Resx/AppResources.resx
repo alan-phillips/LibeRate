@@ -224,4 +224,13 @@
   <data name="Japanese" xml:space="preserve">
     <value>Japanese</value>
   </data>
+  <data name="French" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+  </data>
 </root>
