@@ -129,6 +129,7 @@ namespace LibeRate.Droid.Services
                 book.Author = snapshot.Get("author").ToString();
                 book.ImageURL = snapshot.Get("cover_image").ToString();
                 book.DifficultyRating = (float)snapshot.Get("difficulty_rating");
+                book.UserCount = (int)snapshot.Get("user_count");
             }
             return book;
         }
@@ -142,12 +143,7 @@ namespace LibeRate.Droid.Services
                 var documents = snapshot.Documents;
                 foreach(DocumentSnapshot doc in documents)
                 {
-                    Book b = new Book(doc.Id,
-                        doc.Get("title").ToString(), 
-                        doc.Get("author").ToString(), 
-                        doc.Get("cover_image").ToString(), 
-                        (float)doc.Get("difficulty_rating"),
-                        (int)doc.Get("user_count"));
+                    Book b = ConvertFirestoreResultToBook(doc);
                     books.Add(b);
                 }
                 if(!pageBottoms.Contains(documents.Last())) 
