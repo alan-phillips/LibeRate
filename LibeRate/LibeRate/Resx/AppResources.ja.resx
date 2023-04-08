@@ -228,4 +228,22 @@
   <data name="German" xml:space="preserve">
     <value>ドイツ語</value>
   </data>
+  <data name="SkipButton" xml:space="preserve">
+    <value>スキップ</value>
+  </data>
+  <data name="GradeBooksTitle" xml:space="preserve">
+    <value>本のレーティング</value>
+  </data>
+  <data name="LibraryTitle" xml:space="preserve">
+    <value>マイライブラリ</value>
+  </data>
+  <data name="LibraryOwned" xml:space="preserve">
+    <value>所持中</value>
+  </data>
+  <data name="LibraryRead" xml:space="preserve">
+    <value>既読</value>
+  </data>
+  <data name="LibraryWishlist" xml:space="preserve">
+    <value>ウィッシュリスト</value>
+  </data>
 </root>

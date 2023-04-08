@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <Color x:Key="Primary">#873e23</Color>
             <Color x:Key="Disabled">#997466</Color>
+            <Color x:Key="Background">#f5f3ef</Color>
             
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
@@ -29,7 +30,11 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
-            
+
+            <Style TargetType="Page" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="{StaticResource Background}"></Setter>
+            </Style>
+
             <Style x:Key="BookListView" TargetType="ListView">
                 <Setter Property="HasUnevenRows" Value="True"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>

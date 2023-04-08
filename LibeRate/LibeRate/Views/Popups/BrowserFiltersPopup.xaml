@@ -37,7 +37,7 @@
         
         <StackLayout>
             <Label Text="{xctt:Translate SortByLabel}"/>
-            <Picker Title="Sort by"
+            <Picker Title="{xctt:Translate SortByLabel}"
                 ItemsSource="{Binding Filters}"
                 SelectedItem="{Binding SelectedFilter}"/>
 

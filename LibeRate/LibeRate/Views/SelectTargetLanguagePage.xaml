@@ -14,7 +14,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+        <StackLayout Padding="10" VerticalOptions="Center">
             <Label Text="{xct:Translate SelectTargetLanguageLabel}" FontSize="Title"/>
             <ListView
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
@@ -33,8 +33,8 @@
                                           CommandParameter="{Binding .}"
                                           />
                             </ViewCell.ContextActions>
-                            <Grid Padding="10">
-                                <Frame CornerRadius="20" HasShadow="True">
+                            <Grid Padding="5">
+                                <Frame CornerRadius="10" HasShadow="True">
                                     <StackLayout Orientation="Horizontal">
                                         <Image Source="{Binding ImageURL}" HeightRequest="80" WidthRequest="80" />
                                         <StackLayout Padding="10" VerticalOptions="Center">
@@ -51,7 +51,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button VerticalOptions="Center" Text="{xct:Translate ConfirmButton}" 
+            <Button VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="100" Text="{xct:Translate ConfirmButton}" 
                     Command="{Binding ConfirmSelectionCommand}"/>
         </StackLayout>
     </ContentPage.Content>

@@ -233,4 +233,22 @@
   <data name="German" xml:space="preserve">
     <value>German</value>
   </data>
+  <data name="SkipButton" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="GradeBooksTitle" xml:space="preserve">
+    <value>Grade Books</value>
+  </data>
+  <data name="LibraryRead" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="LibraryWishlist" xml:space="preserve">
+    <value>Wishlist</value>
+  </data>
+  <data name="LibraryOwned" xml:space="preserve">
+    <value>Owned</value>
+  </data>
+  <data name="LibraryTitle" xml:space="preserve">
+    <value>My Library</value>
+  </data>
 </root>

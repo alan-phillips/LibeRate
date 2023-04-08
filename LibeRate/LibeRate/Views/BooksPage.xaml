@@ -27,7 +27,7 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center">
+        <StackLayout VerticalOptions="Center" Padding="5">
             <ListView
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 ItemsSource="{Binding Books}"
@@ -48,7 +48,7 @@
                             <ViewCell.ContextActions>
                             </ViewCell.ContextActions>
                             <Grid Padding="5">
-                                <Frame CornerRadius="10" HasShadow="True">
+                                <Frame CornerRadius="5" HasShadow="True">
                                     <StackLayout Orientation="Horizontal" Spacing="5">
                                         <Image Source="{Binding ImageURL}" WidthRequest="75" HeightRequest="100" HorizontalOptions="Start"/>
                                         <StackLayout HorizontalOptions="Start">

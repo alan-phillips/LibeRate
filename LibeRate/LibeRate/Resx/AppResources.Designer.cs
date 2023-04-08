@@ -187,6 +187,15 @@ namespace LibeRate.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade Books.
+        /// </summary>
+        public static string GradeBooksTitle {
+            get {
+                return ResourceManager.GetString("GradeBooksTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items Per Page:.
         /// </summary>
         public static string ItemsPerPageLabel {
@@ -201,6 +210,42 @@ namespace LibeRate.Resx {
         public static string Japanese {
             get {
                 return ResourceManager.GetString("Japanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owned.
+        /// </summary>
+        public static string LibraryOwned {
+            get {
+                return ResourceManager.GetString("LibraryOwned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        public static string LibraryRead {
+            get {
+                return ResourceManager.GetString("LibraryRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Library.
+        /// </summary>
+        public static string LibraryTitle {
+            get {
+                return ResourceManager.GetString("LibraryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wishlist.
+        /// </summary>
+        public static string LibraryWishlist {
+            get {
+                return ResourceManager.GetString("LibraryWishlist", resourceCulture);
             }
         }
         
@@ -336,6 +381,15 @@ namespace LibeRate.Resx {
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string SkipButton {
+            get {
+                return ResourceManager.GetString("SkipButton", resourceCulture);
             }
         }
         

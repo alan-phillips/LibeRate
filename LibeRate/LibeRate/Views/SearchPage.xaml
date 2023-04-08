@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <StackLayout VerticalOptions="CenterAndExpand" >
                 <SearchBar x:Name="searchBar" 
                 Placeholder="{xct:Translate SearchBarPlaceholder}"

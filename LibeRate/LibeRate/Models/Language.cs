@@ -16,5 +16,13 @@ namespace LibeRate.Models
             { "german", new LocalizedString(() => string.Format(AppResources.German)) },
             { "japanese", new LocalizedString(() => string.Format(AppResources.Japanese)) }
         };
+
+        public static readonly Dictionary<string, LocalizedString> libraryTranslations = new Dictionary<string, LocalizedString>()
+        {
+            { "read", new LocalizedString(() => string.Format(AppResources.LibraryRead)) },
+            { "owned", new LocalizedString(() => string.Format(AppResources.LibraryOwned)) },
+            { "wishlist", new LocalizedString(() => string.Format(AppResources.LibraryWishlist)) }
+        };
+
     }
 }

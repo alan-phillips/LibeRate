@@ -27,7 +27,7 @@
                 <Setter Property="Shell.DisabledColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.UnselectedColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Background}"/>
                 <Setter Property="Shell.TabBarDisabledColor" Value="{StaticResource Primary}"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Primary}"/>
                 <Setter Property="Shell.TabBarTitleColor" Value="White"/>
@@ -102,7 +102,7 @@
         <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Grade Books" IsVisible="{Binding CanGradeBooks}" Icon="grading_available.png">
+    <FlyoutItem Title="{xct:Translate GradeBooksTitle}" IsVisible="{Binding CanGradeBooks}" Icon="grading_available.png">
         <ShellContent Route="GradeBooksPage" ContentTemplate="{DataTemplate local:GradeBooksPage}" />
     </FlyoutItem>
 
