@@ -68,7 +68,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\FirebaseAuthentication.cs" />
+    <Compile Include="Services\LibraryService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <None Include="Entitlements.plist" />
     <BundleResource Include="GoogleService-Info.plist" />
     <None Include="Info.plist" />
